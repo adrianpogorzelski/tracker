@@ -6,10 +6,13 @@
 </head>
 <body>
 
-<header class="navbar bg-light" bs-data-theme="light">
+<header class="navbar bg-light border-bottom" bs-data-theme="light">
     <div class="container">
         <h1>Tracker</h1>
-        <a th:href="@{/login}"><button class="btn btn-primary">Zaloguj</button></a>
+        <div>
+            <a><button class="btn btn-outline-primary">Rejestracja</button></a>
+            <a th:href="@{/dashboard}"><button class="btn btn-primary">Logowanie</button></a>    
+        </div>
     </div>
 </header>
 
