@@ -3,14 +3,10 @@ package Tracker.project;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class Project {
     
     @Id
@@ -18,4 +14,8 @@ public class Project {
     private Long id;
 
     private String name;
+
+    private String description;
+
+    
 }
