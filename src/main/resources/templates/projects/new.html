@@ -8,27 +8,47 @@
     <h2 class="mt-5 mb-3 pt-5 border-bottom">New project</h2>
 
     <form th:action="@{/projects/save}" th:object="${project}" method="post">
+
+        <!-- PROJECT NAME -->
         <div class="mb-3">
-          <label for="project-name" class="form-label">Name</label>
-          <input type="text" 
-                class="form-control" 
-                id="project-name" 
-                aria-describedby="name-help" 
-                th:field="*{name}">
-          <div id="name-help" class="form-text">The name of your project</div>
+            <label for="project-name" class="form-label">Name</label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="project-name" 
+                    placeholder="The name of your project..."
+                    th:field="*{name}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{name}"
+                    th:if="${#fields.hasErrors('name')}">
+            </div>
+
         </div>
+
+        <!-- PROJECT DESCRIPTION -->
         <div class="mb-3">
-          <label for="project-description" class="form-label">Description</label>
-          <input type="text" 
+            <label for="project-description" class="form-label">Description</label>
+
+            <input type="text" 
                 class="form-control" 
                 id="project-description"
-                aria-describedby="description-help"
+                placeholder="A brief description of the project..."
                 th:field="*{description}">
-          <div id="description-help" class="form-text">A short description of your project</div>
+
+        <!-- Errors -->
+        <div class="alert alert-warning mt-1"
+            th:errors="*{description}"
+            th:if="${#fields.hasErrors('description')}">
         </div>
-        <button class="btn btn-outline-danger"><a class="dropdown-item" aria-current="page" th:href="@{/projects}">Cancel</a></button>
-        <button type="submit" class="btn btn-primary">Save project</button>
-      </form>
+    </div>
+
+    <!-- BUTTONS -->
+    <button class="btn btn-outline-danger"><a class="dropdown-item" aria-current="page" th:href="@{/projects}">Cancel</a></button>
+    <button type="submit" class="btn btn-primary">Save project</button>
+
+    </form>
 
 </section>
 
