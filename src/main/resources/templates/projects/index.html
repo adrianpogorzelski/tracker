@@ -4,12 +4,19 @@
     <title>Tracker - Projects</title>
 </head>
 
-<section layout:fragment="custom-content" class="container">
-    <h2 class="mt-5 mb-3 pt-5 border-bottom">Projects</h2>
+<section layout:fragment="custom-content">
+
+    <div class="mt-5 pt-5 navbar">
+        <h2>Projects</h2>
+        <a class="nav-link" th:href="@{/projects/new}"><button class="btn btn-primary">New project</a>
+    </div>
+
     <div class="card w-100 my-2" th:each="project : ${projects}">
         <div class="card-body">
-            <h5 class="card-title" th:text="${project.name}"></h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary" th:text="'ID' + ${project.id}"></h6>
+            <h5 class="card-title">
+                <span class="lead" th:text="'[ID: ' + ${project.id} + '] '"></span>
+                <span th:text="${project.name}"></span></h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary" th:text="'Created on: ' + ${project.dateCreated}"></h6>
             <p class="card-text" th:text="${project.description}"></p>
             <a href="#" class="card-link">Card link</a>
         </div>

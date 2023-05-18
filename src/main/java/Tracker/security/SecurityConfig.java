@@ -33,7 +33,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails userDetails =
-                User.withUsername("demo")
+                User.withUsername("wsb")
                     .password("123")
                     .roles("USER")
                     .build();
