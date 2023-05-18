@@ -24,7 +24,6 @@
                     th:errors="*{name}"
                     th:if="${#fields.hasErrors('name')}">
             </div>
-
         </div>
 
         <!-- PROJECT DESCRIPTION -->
@@ -37,12 +36,12 @@
                 placeholder="A brief description of the project..."
                 th:field="*{description}">
 
-        <!-- Errors -->
-        <div class="alert alert-warning mt-1"
-            th:errors="*{description}"
-            th:if="${#fields.hasErrors('description')}">
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                th:errors="*{description}"
+                th:if="${#fields.hasErrors('description')}">
+            </div>
         </div>
-    </div>
 
     <!-- BUTTONS -->
     <button class="btn btn-outline-danger"><a class="dropdown-item" aria-current="page" th:href="@{/projects}">Cancel</a></button>
