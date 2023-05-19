@@ -18,7 +18,8 @@
                 <span th:text="${project.name}"></span></h5>
             <h6 class="card-subtitle mb-2 text-body-secondary" th:text="#{projects.dateCreated} + ${project.dateCreated}"></h6>
             <p class="card-text" th:text="${project.description}"></p>
-            <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link"><button class="btn btn-outline-danger" th:text="#{common.delete}"></button></a>
+            <a th:href="@{/projects/details/{projectId}(projectId=${project.id})}" class="card-link"><button class="btn btn-primary" th:text="#{common.edit}"></button></a>
         </div>
     </div>
 </section>    

@@ -1,0 +1,23 @@
+<html layout:decorate="~{/layout/layout}">
+
+<head>
+    <title th:text="'Tracker - ' + #{projects.details}"></title>
+</head>
+
+<section layout:fragment="custom-content">
+
+    <div class="mt-5 pt-5 navbar">
+        <h2 th:text="#{projects.details}"></h2>
+    </div>
+
+    <div th:if="${errorMessage}" class="alert alert-warning">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    
+    <div th:unless="${errorMessage}">
+        <div th:text="${project.name}"></div>
+    </div>
+
+</section>    
+
+</html>
