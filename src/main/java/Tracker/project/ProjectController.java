@@ -2,11 +2,16 @@ package Tracker.project;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class ProjectController {
 
     final private ProjectService projectService;
+    final private MessageSource messageSource;
     
     @GetMapping
     ModelAndView index() {
@@ -49,5 +55,40 @@ public class ProjectController {
         project.setDateCreated(LocalDateTime.now());
         projectService.save(project);
         return modelAndView;
+    }
+
+    @GetMapping("/{id}")
+    ModelAndView details(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("/projects/details");
+        Optional<Project> projectOptional = projectService.findById(id);
+        
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            modelAndView.addObject("project", project);
+        } else {
+            String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
+            modelAndView.addObject("errorMessage", errorMessage);
+        }
+        
+        return modelAndView;
+    }
+    
+    @PostMapping("/{id}/update")
+    String update(@PathVariable Long id, @ModelAttribute("project") Project updatedProject) {
+        Optional<Project> projectOptional = projectService.findById(id);
+
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            project.setName(updatedProject.getName());
+            project.setDescription(updatedProject.getDescription());
+            projectService.save(project);
+        }
+
+        return "redirect:/projects";
+    }
+
+    @DeleteMapping("/{id}/delete")
+    String delete(@PathVariable Long id) {
+        
     }
 }
