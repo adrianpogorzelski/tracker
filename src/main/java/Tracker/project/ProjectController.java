@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +57,7 @@ public class ProjectController {
         return modelAndView;
     }
 
-    @GetMapping("/details/{id}")
+    @GetMapping("/{id}")
     ModelAndView details(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("/projects/details");
         Optional<Project> projectOptional = projectService.findById(id);
@@ -70,5 +71,24 @@ public class ProjectController {
         }
         
         return modelAndView;
+    }
+    
+    @PostMapping("/{id}/update")
+    String update(@PathVariable Long id, @ModelAttribute("project") Project updatedProject) {
+        Optional<Project> projectOptional = projectService.findById(id);
+
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            project.setName(updatedProject.getName());
+            project.setDescription(updatedProject.getDescription());
+            projectService.save(project);
+        }
+
+        return "redirect:/projects";
+    }
+
+    @DeleteMapping("/{id}/delete")
+    String delete(@PathVariable Long id) {
+        
     }
 }

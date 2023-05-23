@@ -24,5 +24,4 @@ public class ProjectService {
     public Optional<Project> findById(Long id) {
         return projectRepository.findById(id);
     }
-    
 }
