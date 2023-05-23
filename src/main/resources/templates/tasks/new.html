@@ -1,0 +1,63 @@
+<html layout:decorate="~{/layout/layout}">
+
+<head>
+    <title th:text="'Tracker - ' + #{project.new}"></title>
+</head>
+
+<section layout:fragment="custom-content" class="container">
+    <h2 class="mt-5 mb-3 pt-5 border-bottom" th:text="#{projects.new}"></h2>
+
+    <form th:action="@{/tasks/save}" th:object="${task}" method="post">
+
+        <!-- PROJECT NAME -->
+        <div class="mb-3">
+            <label for="task-name" class="form-label" th:text="#{projects.name}"></label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="project-name" 
+                    th:placeholder="#{projects.namePlaceholder}"
+                    th:field="*{name}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{name}"
+                    th:if="${#fields.hasErrors('name')}">
+            </div>
+        </div>
+
+        <!-- PROJECT DESCRIPTION -->
+        <div class="mb-3">
+            <label for="project-description" class="form-label" th:text="#{projects.description}"></label>
+
+            <input type="text" 
+                class="form-control" 
+                id="project-description"
+                th:placeholder="#{projects.descriptionPlaceholder}"
+                th:field="*{description}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                th:errors="*{description}"
+                th:if="${#fields.hasErrors('description')}">
+            </div>
+        </div>
+
+
+
+    <!-- BUTTONS -->
+    <button class="btn btn-outline-danger">
+        <a class="dropdown-item" 
+            aria-current="page" 
+            th:href="@{/tasks}"
+            th:text="#{common.cancel}"></a>
+    </button>
+    <button type="submit"
+            class="btn btn-primary"
+            th:text="#{common.save}"></button>
+
+    </form>
+
+</section>
+
+</html>

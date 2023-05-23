@@ -35,4 +35,12 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskStatus taskStatus = TaskStatus.BACKLOG;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskType taskType = TaskType.REQUEST;
 }
