@@ -1,9 +1,8 @@
-package Tracker.project;
+package Tracker.task;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import Tracker.task.Task;
+import Tracker.project.Project;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -12,11 +11,11 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Project {
+public class Task {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_seq_generator")
-    @SequenceGenerator(name = "project_seq_generator", sequenceName = "project_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_seq_generator")
+    @SequenceGenerator(name = "task_seq_generator", sequenceName = "task_SEQ", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false)
@@ -33,6 +32,7 @@ public class Project {
     @Column(nullable = false)
     private LocalDateTime dateCreated;
 
-    @OneToMany(mappedBy = "project")
-    private List<Task> tasks;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }

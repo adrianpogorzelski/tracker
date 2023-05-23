@@ -1,117 +1,16 @@
 <html layout:decorate="~{/layout/layout}">
 
 <head>
-    <title th:text="'Tracker - ' + #{projects.details}"></title>
+    <title th:text="'Tracker - ' + #{common.details}"></title>
 </head>
 
 <section layout:fragment="custom-content">
 
     <div class="mt-5 pt-5 navbar">
-        <h2 th:text="#{projects.details}"></h2>
+        <h2 th:text="#{common.details}"></h2>
     </div>
 
-    <div th:if="${errorMessage}" class="alert alert-warning">
-        <p th:text="${errorMessage}"></p>
-    </div>
     
-    <form th:unless="${errorMessage}" th:action="@{/projects/{id}/update(id=${project.id})}" th:object="${project}" method="post">
-
-        <div class="row my-1">
-            <span class="col-2">ID</span>
-            <input class="col-10" th:value="${project.id}" disabled>
-        </div>
-
-        <div class="row my-1">
-            <span class="col-2" th:text="#{projects.dateCreated}"></span>
-            <input class="col-10" th:value="${project.dateCreated}" disabled>
-        </div>
-
-        <div class="row my-1">
-            <span class="col-2" th:text="#{projects.name}"></span>
-            <input class="col-10" th:val="${project.name}" th:field="*{name}">
-        </div>
-
-        <div class="row my-1">
-            <span class="col-2" th:text="#{projects.description}"></span>
-            <input class="col-10" th:val="${project.description}" th:field="*{description}">
-        </div>
-
-        <div class="d-flex mt-3 justify-content-between">
-
-            <!-- Back & Save buttons -->
-                <button class="btn btn-outline-secondary me-2">
-                    <div class="d-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left me-2 mt-1" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
-                          </svg>
-                        <a class="nav-link" 
-                            aria-current="page" 
-                            th:href="@{/projects}"
-                            th:text="#{common.cancel}">
-                        </a>
-                    </div>
-                </button>
-                <button type="submit"
-                        class="btn btn-success">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
-                        </svg>
-                        <span th:text="#{common.save}"></span>
-                </button>    
-        </div>
-    </form>
-
-    <!-- DELETE -->
-    <div class="btn btn-outline-danger justify-self-start" data-bs-toggle="modal" data-bs-target="#confirmDelete">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-        </svg>
-        <span th:text="#{common.delete}"></span>
-    </div>
-
-    <!-- Confirm delete modal -->
-    <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="confirmDeleteLabel" th:text="#{common.confirmDelete}"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <span th:text="#{delete.text}"></span>
-                </div>
-
-                <div class="modal-footer">
-                    <div class="btn btn-secondary" data-bs-dismiss="modal">
-                        <div class="d-flex align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left me-2 mt-1" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
-                                </svg>
-                            <a class="nav-link" 
-                                th:text="#{common.cancel}">
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Confirm delete -->
-                    <a th:href="@{/projects/{id}/delete(id=${project.id})}">
-                        <button class="btn btn-outline-danger justify-self-start" data-bs-toggle="modal" data-bs-target="#confirmDelete">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                            </svg>
-                            <span th:text="#{common.delete}"></span>
-                        </button>                       
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-
 </section>    
 
 </html>
