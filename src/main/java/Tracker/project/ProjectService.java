@@ -24,4 +24,8 @@ public class ProjectService {
     public Optional<Project> findById(Long id) {
         return projectRepository.findById(id);
     }
+
+    public void delete(Long id) {
+        projectRepository.deleteById(id);
+    }
 }

@@ -74,7 +74,7 @@ public class ProjectController {
     }
     
     @PostMapping("/{id}/update")
-    String update(@PathVariable Long id, @ModelAttribute("project") Project updatedProject) {
+    public String update(@PathVariable Long id, @ModelAttribute("project") Project updatedProject) {
         Optional<Project> projectOptional = projectService.findById(id);
 
         if (projectOptional.isPresent()) {
@@ -87,8 +87,9 @@ public class ProjectController {
         return "redirect:/projects";
     }
 
-    @DeleteMapping("/{id}/delete")
-    String delete(@PathVariable Long id) {
-        
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        projectService.delete(id);
+        return "redirect:/projects";
     }
 }
