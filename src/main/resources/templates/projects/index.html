@@ -7,7 +7,7 @@
 <section layout:fragment="custom-content">
 
     <div class="mt-5 pt-5 navbar">
-        <h2 th:text="#{projects.title}"></h2>></h2>
+        <h2 th:text="#{projects.title}"></h2></h2>
         <a class="nav-link" th:href="@{/projects/new}"><button class="btn btn-primary" th:text="#{projects.new}"></a>
     </div>
 
@@ -20,7 +20,7 @@
                 <h6 class="card-subtitle mb-2 text-body-secondary" th:text="#{projects.dateCreated} + ${project.dateCreated}"></h6>
             </div>
             <div class="col-2 text-end">
-                <a th:href="@{/projects/{projectId}(projectId=${project.id})}" class="card-link">
+                <a th:href="@{/projects/{id}(id=${project.id})}" class="card-link">
                     <button class="btn btn-outline-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                             <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
