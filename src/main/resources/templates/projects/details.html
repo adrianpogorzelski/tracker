@@ -17,7 +17,7 @@
                 <h5 class="card-title">
                     <span class="lead" th:text="'[ID: ' + ${task.id} + '] '"></span>
                     <span th:text="${task.name}"></span></h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary" th:text="#{tasks.dateCreated} + ${task.dateCreated}"></h6>
+                <h6 class="card-subtitle mb-2 text-body-secondary" th:text="#{common.dateCreated} + ${task.dateCreated}"></h6>
             </div>
             <div class="col-2 text-end">
                 <a th:href="@{/tasks/{id}(id=${task.id})}" class="card-link">

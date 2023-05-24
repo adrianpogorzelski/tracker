@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import Tracker.project.Project;
+import Tracker.project.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -20,11 +22,11 @@ import lombok.RequiredArgsConstructor;
 public class TaskController {
     
     final private TaskService taskService;
+    final private ProjectService projectService;
 
     @GetMapping
     ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/tasks/index");
-
         List<Task> tasks = taskService.findAll();
         modelAndView.addObject("tasks", tasks);
         return modelAndView;
@@ -33,8 +35,15 @@ public class TaskController {
     @GetMapping("/new")
     ModelAndView newTask() {
         ModelAndView modelAndView = new ModelAndView("/tasks/new");
+
         Task task = new Task();
         modelAndView.addObject("task", task);
+
+        List<Project> projects = projectService.findAll();
+        modelAndView.addObject("projects", projects);
+
+        modelAndView.addObject("taskTypes", TaskType.values());
+
         return modelAndView;
     }
 
@@ -49,6 +58,7 @@ public class TaskController {
         }
 
         task.setDateCreated(LocalDateTime.now());
+        task.setTaskStatus(TaskStatus.BACKLOG);
         taskService.save(task);
         return modelAndView;
     }}
