@@ -1,0 +1,78 @@
+<html layout:decorate="~{/layout/layout}">
+
+<head>
+    <title th:text="'Tracker - ' + #{people.new}"></title>
+</head>
+
+<section layout:fragment="custom-content" class="container">
+    <h2 class="mt-5 mb-3 pt-5 border-bottom" th:text="#{people.new}"></h2>
+
+    <form th:action="@{/people/save}" th:object="${person}" method="post">
+
+        <!-- PERSON FIRST NAME -->
+        <div class="mb-3">
+            <label for="person-firstName" class="form-label" th:text="#{people.firstName}"></label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="person-firstName" 
+                    th:placeholder="#{people.firstNamePlaceholder}"
+                    th:field="*{firstName}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{firstName}"
+                    th:if="${#fields.hasErrors('firstName')}">
+            </div>
+        </div>
+
+        <!-- PERSON LAST NAME -->
+        <div class="mb-3">
+            <label for="person-lastName" class="form-label" th:text="#{people.lastName}"></label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="person-lastName" 
+                    th:placeholder="#{people.lastNamePlaceholder}"
+                    th:field="*{lastName}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{lastName}"
+                    th:if="${#fields.hasErrors('lastName')}">
+            </div>
+        </div>
+
+        <!-- EMAIL ADDRESS -->
+        <div class="mb-3">
+            <label for="person-email" class="form-label" th:text="#{common.email}"></label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="person-email" 
+                    th:placeholder="#{people.emailPlaceholder}"
+                    th:field="*{email}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{email}"
+                    th:if="${#fields.hasErrors('email')}">
+            </div>
+        </div>
+
+    <!-- BUTTONS -->
+    <button class="btn btn-outline-danger">
+        <a class="dropdown-item" 
+            aria-current="page" 
+            th:href="@{/people}"
+            th:text="#{common.cancel}"></a>
+    </button>
+    <button type="submit"
+            class="btn btn-primary"
+            th:text="#{common.save}"></button>
+
+    </form>
+
+</section>
+
+</html>
