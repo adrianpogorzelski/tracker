@@ -8,7 +8,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +59,22 @@ public class ProjectController {
     @GetMapping("/{id}")
     ModelAndView details(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("/projects/details");
+        Optional<Project> projectOptional = projectService.findById(id);
+
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            modelAndView.addObject("project", project);
+        } else {
+            String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
+            modelAndView.addObject("errorMessage", errorMessage);
+        }
+        
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}/edit")
+    ModelAndView edit(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("/projects/edit");
         Optional<Project> projectOptional = projectService.findById(id);
         
         if (projectOptional.isPresent()) {

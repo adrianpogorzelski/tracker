@@ -1,17 +1,17 @@
 <html layout:decorate="~{/layout/layout}">
 
 <head>
-    <title th:text="'Tracker - ' + #{common.details}"></title>
+    <title th:text="'Tracker - ' + #{tasks.title}"></title>
 </head>
 
 <section layout:fragment="custom-content">
 
     <div class="mt-5 pt-5 navbar">
-        <h2 th:text="#{common.details}"></h2>
+        <h2 th:text="#{tasks.title}"></h2></h2>
+        <a class="nav-link" th:href="@{/tasks/new}"><button class="btn btn-primary" th:text="#{tasks.new}"></a>
     </div>
 
-    <!-- Tasks -->
-    <div th:each="task : ${project.tasks}">
+    <div class="card w-100 my-2" th:each="task : ${tasks}">
         <div class="card-body row">
             <div class="col-10">
                 <h5 class="card-title">
@@ -33,11 +33,10 @@
             <p class="card-text" th:text="${task.description}"></p>
             <div>
                 <span th:text="#{projects.project} + ': '"></span>
-                <a th:href="@{/projects/{id}(id=${task.project.id})}" class="card-link" th:text="${task.project.name}"></a>
+                <a th:href="@{/projects/{id}(id=${task.project?.id})}" class="card-link" th:text="${task.project != null ? task.project.name : ''}"></a>
             </div> 
         </div>
     </div>
-
 </section>    
 
 </html>

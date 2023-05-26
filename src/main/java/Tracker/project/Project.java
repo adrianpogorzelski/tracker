@@ -1,7 +1,9 @@
 package Tracker.project;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import Tracker.task.Task;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -30,4 +32,7 @@ public class Project {
 
     @Column(nullable = false)
     private LocalDateTime dateCreated;
+
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks;
 }

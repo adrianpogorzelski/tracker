@@ -1,0 +1,83 @@
+<html layout:decorate="~{/layout/layout}">
+
+<head>
+    <title th:text="'Tracker - ' + #{tasks.new}"></title>
+</head>
+
+<section layout:fragment="custom-content" class="container">
+    <h2 class="mt-5 mb-3 pt-5 border-bottom" th:text="#{tasks.new}"></h2>
+
+    <form th:action="@{/tasks/save}" th:object="${task}" method="post">
+
+        <!-- PROJECT NAME -->
+        <div class="mb-3">
+            <label for="task-name" class="form-label" th:text="#{common.name}"></label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="task-name" 
+                    th:placeholder="#{projects.namePlaceholder}"
+                    th:field="*{name}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{name}"
+                    th:if="${#fields.hasErrors('name')}">
+            </div>
+        </div>
+
+        <!-- PROJECT DESCRIPTION -->
+        <div class="mb-3">
+            <label for="task-description" class="form-label" th:text="#{common.description}"></label>
+
+            <input type="text" 
+                class="form-control" 
+                id="task-description"
+                th:placeholder="#{projects.descriptionPlaceholder}"
+                th:field="*{description}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                th:errors="*{description}"
+                th:if="${#fields.hasErrors('description')}">
+            </div>
+        </div>
+
+        <!-- TASK TYPE -->
+        <div class="mb-3">
+            <label for="task-type" class="form-label" th:text="#{tasks.type}"></label>
+
+            <div id="task-type" class="form-check" th:each="type : ${taskTypes}">
+                <input class="form-check-input" type="radio" th:field="*{taskType}" th:value="${type}">
+                <label class="form-check-label" for="flexRadioDefault1" th:text="${type}"></label>
+            </div>
+        </div>
+
+        <!-- PROJECT -->
+        <div class="mb-3">
+            <label for="task-description" class="form-label" th:text="#{projects.project}"></label>
+
+            <select class="form-select" th:field="*{project}">
+                <option th:each="project : ${projects}"
+                        th:value="${project.id}"
+                        th:text="${project.name}">
+                </option>
+            </select>    
+        </div>
+
+    <!-- BUTTONS -->
+    <button class="btn btn-outline-danger">
+        <a class="dropdown-item" 
+            aria-current="page" 
+            th:href="@{/tasks}"
+            th:text="#{common.cancel}"></a>
+    </button>
+    <button type="submit"
+            class="btn btn-primary"
+            th:text="#{common.save}"></button>
+
+    </form>
+
+</section>
+
+</html>
