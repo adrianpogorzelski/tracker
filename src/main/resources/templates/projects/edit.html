@@ -1,13 +1,13 @@
 <html layout:decorate="~{/layout/layout}">
 
 <head>
-    <title th:text="'Tracker - ' + #{projects.details}"></title>
+    <title th:text="'Tracker - ' + #{common.details}"></title>
 </head>
 
 <section layout:fragment="custom-content">
 
     <div class="mt-5 pt-5 navbar">
-        <h2 th:text="#{projects.details}"></h2>
+        <h2 th:text="#{common.details}"></h2>
     </div>
 
     <div th:if="${errorMessage}" class="alert alert-warning">

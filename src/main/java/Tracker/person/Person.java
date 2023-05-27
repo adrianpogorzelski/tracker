@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import Tracker.project.Project;
 
 
 @Entity
@@ -40,4 +43,8 @@ public class Person {
 
     @Column
     private String role;
+
+    @Column
+    @OneToMany(mappedBy = "manager")
+    private List<Project> managedProjects;
 }

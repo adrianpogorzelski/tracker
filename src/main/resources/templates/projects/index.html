@@ -52,7 +52,15 @@
                     </button>
                 </a>
             </div>
-            <p class="card-text" th:text="${project.description}"></p>    
+
+            <!-- Description -->
+            <p class="card-text" th:text="${project.description}"></p>
+            <p class="card-text">
+                <span th:text="#{projects.manager} + ': '"></span>
+                <a class="card-link" th:href="@{/people/{id}(id=${project.manager.id})}" th:text="${project.manager.firstName + ' ' + project.manager.lastName}"></a>
+            </p>
+            <p class="card-text">
+                
         </div>
     </div>
 </section>    
