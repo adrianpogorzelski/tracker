@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import Tracker.project.Project;
+import Tracker.task.Task;
 
 
 @Entity
@@ -44,7 +45,9 @@ public class Person {
     @Column
     private String role;
 
-    @Column
     @OneToMany(mappedBy = "manager")
     private List<Project> managedProjects;
+
+    @OneToMany(mappedBy = "assignee")
+    private List<Task> tasks;
 }

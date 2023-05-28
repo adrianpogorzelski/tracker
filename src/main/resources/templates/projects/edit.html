@@ -16,24 +16,39 @@
     
     <form th:unless="${errorMessage}" th:action="@{/projects/{id}/update(id=${project.id})}" th:object="${project}" method="post">
 
+        <!-- ID - uneditable -->
         <div class="row my-1">
             <span class="col-2">ID</span>
             <input class="col-10" th:value="${project.id}" disabled>
         </div>
 
+        <!-- Date created - uneditable -->
         <div class="row my-1">
             <span class="col-2" th:text="#{projects.dateCreated}"></span>
             <input class="col-10" th:value="${project.dateCreated}" disabled>
         </div>
 
+        <!-- Project name -->
         <div class="row my-1">
             <span class="col-2" th:text="#{projects.name}"></span>
             <input class="col-10" th:val="${project.name}" th:field="*{name}">
         </div>
 
+        <!-- Project description -->
         <div class="row my-1">
             <span class="col-2" th:text="#{projects.description}"></span>
             <input class="col-10" th:val="${project.description}" th:field="*{description}">
+        </div>
+
+        <!-- Project manager -->
+        <div class="row my-1">
+            <label for="manager-id" class="col-2" th:text="#{projects.manager}"></label>
+            <select class="col-10 form-select" th:field="*{manager}">
+                <option th:each="person : ${people}"
+                        th:value="${person.id}"
+                        th:text="${person.firstName} + ' ' + ${person.lastName}">
+                </option>
+            </select>            
         </div>
 
         <div class="d-flex mt-3 justify-content-between">

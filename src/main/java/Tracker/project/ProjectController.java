@@ -89,6 +89,9 @@ public class ProjectController {
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             modelAndView.addObject("project", project);
+
+            List<Person> people = personService.findAll();
+            modelAndView.addObject("people", people);
         } else {
             String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
             modelAndView.addObject("errorMessage", errorMessage);
@@ -105,6 +108,7 @@ public class ProjectController {
             Project project = projectOptional.get();
             project.setName(updatedProject.getName());
             project.setDescription(updatedProject.getDescription());
+            project.setManager(updatedProject.getManager());
             projectService.save(project);
         }
 
