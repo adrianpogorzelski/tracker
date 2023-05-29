@@ -42,8 +42,9 @@
 
         <!-- Project manager -->
         <div class="row my-1">
-            <label for="manager-id" class="col-2" th:text="#{projects.manager}"></label>
-            <select class="col-10 form-select" th:field="*{manager}">
+            <span for="project-manager" class="col-2 form-label" th:text="#{projects.manager}"></span>
+
+            <select class="col-10 form-select" th:field="*{manager.id}">
                 <option th:each="person : ${people}"
                         th:value="${person.id}"
                         th:text="${person.firstName} + ' ' + ${person.lastName}">

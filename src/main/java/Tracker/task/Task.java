@@ -46,6 +46,6 @@ public class Task {
     private TaskType taskType = TaskType.REQUEST;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "assignee_id")
     private Person assignee;
 }
