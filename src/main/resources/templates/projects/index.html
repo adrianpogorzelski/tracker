@@ -7,7 +7,7 @@
 <section layout:fragment="custom-content">
 
     <div class="mt-5 pt-5 navbar">
-        <h2 th:text="#{projects.title}"></h2></h2>
+        <h2 th:text="#{projects.title}"></h2>
         <a class="nav-link" th:href="@{/projects/new}">
             <button class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -52,7 +52,15 @@
                     </button>
                 </a>
             </div>
-            <p class="card-text" th:text="${project.description}"></p>    
+
+            <!-- Description -->
+            <p class="card-text" th:text="${project.description}"></p>
+            <p class="card-text">
+                <span th:text="#{projects.manager} + ': '"></span>
+                <a class="card-link" th:href="@{/people/{id}(id=${project.manager.id})}" th:text="${project.manager.firstName + ' ' + project.manager.lastName}"></a>
+            </p>
+            <p class="card-text">
+                
         </div>
     </div>
 </section>    

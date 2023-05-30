@@ -3,6 +3,7 @@ package Tracker.project;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import Tracker.person.Person;
 import Tracker.task.Task;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -33,6 +34,11 @@ public class Project {
     @Column(nullable = false)
     private LocalDateTime dateCreated;
 
+    @Column
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
+
+    @ManyToOne
+    @JoinColumn(name = "manager_id")
+    private Person manager;
 }

@@ -14,35 +14,35 @@
         <p th:text="${errorMessage}"></p>
     </div>
     
-    <form th:unless="${errorMessage}" th:action="@{/projects/{id}/update(id=${project.id})}" th:object="${project}" method="post">
+    <form th:unless="${errorMessage}" th:action="@{/tasks/{id}/update(id=${task.id})}" th:object="${task}" method="post">
 
         <!-- ID - uneditable -->
         <div class="row my-1">
             <span class="col-2">ID</span>
-            <input class="col-10" th:value="${project.id}" disabled>
+            <input class="col-10" th:value="${task.id}" disabled>
         </div>
 
         <!-- Date created - uneditable -->
         <div class="row my-1">
-            <span class="col-2" th:text="#{projects.dateCreated}"></span>
-            <input class="col-10" th:value="${project.dateCreated}" disabled>
+            <span class="col-2" th:text="#{tasks.dateCreated}"></span>
+            <input class="col-10" th:value="${task.dateCreated}" disabled>
         </div>
 
         <!-- Project name -->
         <div class="row my-1">
-            <span class="col-2" th:text="#{projects.name}"></span>
-            <input class="col-10" th:val="${project.name}" th:field="*{name}">
+            <span class="col-2" th:text="#{tasks.name}"></span>
+            <input class="col-10" th:val="${task.name}" th:field="*{name}">
         </div>
 
         <!-- Project description -->
         <div class="row my-1">
-            <span class="col-2" th:text="#{projects.description}"></span>
-            <input class="col-10" th:val="${project.description}" th:field="*{description}">
+            <span class="col-2" th:text="#{tasks.description}"></span>
+            <input class="col-10" th:val="${task.description}" th:field="*{description}">
         </div>
 
         <!-- Project manager -->
         <div class="row my-1">
-            <span for="project-manager" class="col-2 form-label" th:text="#{projects.manager}"></span>
+            <span for="task-manager" class="col-2 form-label" th:text="#{tasks.manager}"></span>
 
             <select class="col-10 form-select" th:field="*{manager.id}">
                 <option th:each="person : ${people}"
@@ -62,7 +62,7 @@
                           </svg>
                         <a class="nav-link" 
                             aria-current="page" 
-                            th:href="@{/projects}"
+                            th:href="@{/tasks}"
                             th:text="#{common.cancel}">
                         </a>
                     </div>
@@ -113,7 +113,7 @@
                     </div>
 
                     <!-- Confirm delete -->
-                    <a th:href="@{/projects/{id}/delete(id=${project.id})}">
+                    <a th:href="@{/tasks/{id}/delete(id=${task.id})}">
                         <button class="btn btn-outline-danger justify-self-start" data-bs-toggle="modal" data-bs-target="#confirmDelete">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>

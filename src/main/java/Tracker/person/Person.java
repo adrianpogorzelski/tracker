@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
+
+import Tracker.project.Project;
+import Tracker.task.Task;
 
 
 @Entity
@@ -40,4 +44,10 @@ public class Person {
 
     @Column
     private String role;
+
+    @OneToMany(mappedBy = "manager")
+    private List<Project> managedProjects;
+
+    @OneToMany(mappedBy = "assignee")
+    private List<Task> tasks;
 }

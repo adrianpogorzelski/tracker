@@ -2,6 +2,7 @@ package Tracker.task;
 
 import java.time.LocalDateTime;
 
+import Tracker.person.Person;
 import Tracker.project.Project;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -43,4 +44,8 @@ public class Task {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskType taskType = TaskType.REQUEST;
+
+    @ManyToOne
+    @JoinColumn(name = "assignee_id")
+    private Person assignee;
 }

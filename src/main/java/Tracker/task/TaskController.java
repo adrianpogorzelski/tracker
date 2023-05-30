@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import Tracker.person.Person;
+import Tracker.person.PersonService;
 import Tracker.project.Project;
 import Tracker.project.ProjectService;
 import jakarta.validation.Valid;
@@ -23,6 +25,7 @@ public class TaskController {
     
     final private TaskService taskService;
     final private ProjectService projectService;
+    final private PersonService personService;
 
     @GetMapping
     ModelAndView index() {
@@ -41,6 +44,10 @@ public class TaskController {
 
         List<Project> projects = projectService.findAll();
         modelAndView.addObject("projects", projects);
+
+        List<Person> people = personService.findAll();
+        modelAndView.addObject("people", people);
+
 
         modelAndView.addObject("taskTypes", TaskType.values());
 

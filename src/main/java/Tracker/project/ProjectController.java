@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import Tracker.person.Person;
+import Tracker.person.PersonService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class ProjectController {
 
     final private ProjectService projectService;
+    final private PersonService personService;
     final private MessageSource messageSource;
     
     @GetMapping
@@ -36,8 +40,13 @@ public class ProjectController {
     @GetMapping("/new")
     ModelAndView newProject() {
         ModelAndView modelAndView = new ModelAndView("/projects/new");
+
         Project project = new Project();
         modelAndView.addObject("project", project);
+
+        List<Person> people = personService.findAll();
+        modelAndView.addObject("people", people);
+
         return modelAndView;
     }
 
@@ -80,6 +89,9 @@ public class ProjectController {
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             modelAndView.addObject("project", project);
+
+            List<Person> people = personService.findAll();
+            modelAndView.addObject("people", people);
         } else {
             String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
             modelAndView.addObject("errorMessage", errorMessage);
@@ -96,6 +108,7 @@ public class ProjectController {
             Project project = projectOptional.get();
             project.setName(updatedProject.getName());
             project.setDescription(updatedProject.getDescription());
+            project.setManager(updatedProject.getManager());
             projectService.save(project);
         }
 

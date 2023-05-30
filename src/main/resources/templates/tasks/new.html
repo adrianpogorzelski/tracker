@@ -65,6 +65,18 @@
             </select>    
         </div>
 
+        <!-- ASSIGNEE -->
+        <div class="mb-3">
+            <label for="task-assignee" class="form-label" th:text="#{tasks.assignee}"></label>
+
+            <select class="form-select" th:field="*{assignee}">
+                <option th:each="person : ${people}"
+                        th:value="${person.id}"
+                        th:text="${person.firstName} + ' ' + ${person.lastName}">
+                </option>
+            </select>    
+        </div>
+
     <!-- BUTTONS -->
     <button class="btn btn-outline-danger">
         <a class="dropdown-item" 
