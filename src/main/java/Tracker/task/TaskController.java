@@ -2,11 +2,15 @@ package Tracker.task;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,12 +30,16 @@ public class TaskController {
     final private TaskService taskService;
     final private ProjectService projectService;
     final private PersonService personService;
+    final private MessageSource messageSource;
 
     @GetMapping
     ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/tasks/index");
         List<Task> tasks = taskService.findAll();
         modelAndView.addObject("tasks", tasks);
+
+        List<Project> projects = projectService.findAll();
+        modelAndView.addObject("projects", projects);
         return modelAndView;
     }
 
@@ -68,4 +76,68 @@ public class TaskController {
         task.setTaskStatus(TaskStatus.BACKLOG);
         taskService.save(task);
         return modelAndView;
-    }}
+    }
+
+    @GetMapping("/{id}")
+    ModelAndView details(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("/tasks/details");
+        Optional<Task> taskOptional = taskService.findById(id);
+
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            modelAndView.addObject("task", task);
+        } else {
+            String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
+            modelAndView.addObject("errorMessage", errorMessage);
+        }
+        
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}/edit")
+    ModelAndView edit(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("/tasks/edit");
+        Optional<Task> taskOptional = taskService.findById(id);
+        
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            modelAndView.addObject("task", task);
+
+            List<Person> people = personService.findAll();
+            modelAndView.addObject("people", people);
+
+            List<Project> projects = projectService.findAll();
+            modelAndView.addObject("projects", projects);
+
+            modelAndView.addObject("taskTypes", TaskType.values());
+
+        } else {
+            String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
+            modelAndView.addObject("errorMessage", errorMessage);
+        }
+        
+        return modelAndView;
+    }
+    
+    @PostMapping("/{id}/update")
+    public String update(@PathVariable Long id, @ModelAttribute("task") Task updatedTask) {
+        Optional<Task> taskOptional = taskService.findById(id);
+
+        if (taskOptional.isPresent()) {
+            Task task = taskOptional.get();
+            task.setName(updatedTask.getName());
+            task.setDescription(updatedTask.getDescription());
+            task.setProject(updatedTask.getProject());
+            task.setAssignee(updatedTask.getAssignee());
+            taskService.save(task);
+        }
+
+        return "redirect:/tasks";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        taskService.delete(id);
+        return "redirect:/tasks";
+    }
+}
