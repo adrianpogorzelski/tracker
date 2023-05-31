@@ -13,6 +13,49 @@
         <a class="nav-link" th:href="@{/tasks/new}"><button class="btn btn-primary" th:text="#{tasks.new}"></a>
     </div>
 
+    <!-- FILTERS -->
+    <form th:action="@{/tasks}" th:object="${filter}" class="row">
+
+        <!-- Project -->
+        <div class="col">
+            <select id="projects-filter" class="form-select" th:field="*{project.id}">
+                <option th:value="${null}" th:text="#{projects.title}" selected hidden></option>
+                <option th:each="project : ${projects}"
+                        th:value="${project.getId()}"
+                        th:text="${project.getName()}">
+                </option>
+            </select>    
+        </div>
+
+        <!-- Status -->
+        <div class="col">
+            <select id="status-filter" class="form-select" th:field="*{taskStatus}">
+                <option th:each="status : ${taskStatus}"
+                        th:value="${status}"
+                        th:text="${status}">
+                </option>
+            </select>    
+        </div>
+
+        
+        <!-- Assignee -->
+        <div class="col">
+            <select id="status-filter" class="form-select" th:field="*{assignee.id}">
+                <option th:each="person : ${people}"
+                        th:value="${person.getId()}"
+                        th:text="${person.getFirstName()} + ' ' + ${person.getLastName()}">
+                </option>
+            </select>    
+        </div>
+
+        <!-- Filter buttons -->
+        <div class="col">
+            <button type="submit" th:text="#{filters.filter}" class="btn btn-primary"></button>
+            <a class="btn btn-outline-secondary" th:href="@{/tasks}" th:text="#{filters.clear}"></a>
+        </div>
+    </form>
+
+    <!-- TASKS-->
     <div class="card w-100 my-2" th:each="task : ${tasks}">
         <div class="card-body row">
             <div class="col">

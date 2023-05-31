@@ -33,13 +33,22 @@ public class TaskController {
     final private MessageSource messageSource;
 
     @GetMapping
-    ModelAndView index() {
+    ModelAndView index(@ModelAttribute TaskFilter filter) {
         ModelAndView modelAndView = new ModelAndView("/tasks/index");
-        List<Task> tasks = taskService.findAll();
+        
+        List<Task> tasks = taskService.findAll(filter.buildSpecification());
         modelAndView.addObject("tasks", tasks);
+
+        modelAndView.addObject("filter", filter);
 
         List<Project> projects = projectService.findAll();
         modelAndView.addObject("projects", projects);
+
+        List<Person> people = personService.findAll();
+        modelAndView.addObject("people", people);
+        
+        modelAndView.addObject("taskStatus", TaskStatus.values());
+
         return modelAndView;
     }
 

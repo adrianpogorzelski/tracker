@@ -3,9 +3,9 @@ package Tracker.task;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import Tracker.project.Project;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -15,8 +15,8 @@ public class TaskService {
     
     final private TaskRepository taskRepository;
 
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+    public List<Task> findAll(Specification<Task> specification) {
+        return taskRepository.findAll(specification);
     }
 
     public void save(@Valid Task task) {
