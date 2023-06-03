@@ -37,6 +37,15 @@ public class Person {
     private String lastName;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    @NotNull
+    @NotEmpty
+    @Size(min=8)
+    private String password;
+
+    @Column(nullable = false)
     @NotNull
     @NotEmpty
     @Size(min=3)

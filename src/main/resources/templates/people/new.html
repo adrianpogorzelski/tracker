@@ -47,7 +47,7 @@
         <div class="mb-3">
             <label for="person-email" class="form-label" th:text="#{common.email}"></label>
 
-            <input type="text" 
+            <input type="email" 
                     class="form-control" 
                     id="person-email" 
                     th:placeholder="#{people.emailPlaceholder}"
@@ -60,6 +60,34 @@
             </div>
         </div>
 
+        <!-- PASSWORD -->
+        <div>
+                <label for="password" class="form-label" th:text="#{common.password}"></label>
+                
+                <input type="password" 
+                        class="form-control" 
+                        id="password" 
+                        th:placeholder="#{people.passwordPlaceholder}"
+                        th:field="*{password}"> 
+                        
+                <!-- Errors -->
+                <div class="alert alert-warning mt-1"
+                        th:errors="*{password}"
+                        th:if="${#fields.hasErrors('password')}">
+                </div>
+        </div>
+
+       <!-- Confirm -->
+        <div class="my-3">
+                <label for="confirm-password" th:text="#{people.confirmPassword}"></label>
+                <input type="password" 
+                        class="form-control" 
+                        id="confirm-password" 
+                        th:placeholder="#{people.confirmPassword}">
+        
+        </div>
+    
+    
     <!-- BUTTONS -->
     <button class="btn btn-outline-danger">
         <a class="dropdown-item" 

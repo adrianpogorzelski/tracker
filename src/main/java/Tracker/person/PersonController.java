@@ -47,6 +47,7 @@ public class PersonController {
         }
 
         person.setDateCreated(LocalDateTime.now());
+        person.setUsername(person.getLastName());
         personService.save(person);
         return modelAndView;
     }

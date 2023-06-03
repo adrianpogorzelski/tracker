@@ -19,7 +19,7 @@
     </div>
 
     <div class="card w-100 my-2" th:each="person : ${people}">
-        <div class="card-body row">
+        <div class="card-body row" th:unless="${person.username == 'admin'}">
             <div class="col">
                 <h5 class="card-title">
                     <span class="lead" th:text="'[ID: ' + ${person.id} + '] '"></span>
