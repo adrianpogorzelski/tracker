@@ -15,13 +15,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SecurityConfig {
 
-    private final CustomUserDetailService customUserDetailService;
+    private TrackerUserDetailService trackerUserDetailService;
     
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/**").permitAll()
+                //.requestMatchers("/", "/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin((form) -> form
@@ -44,8 +44,10 @@ public class SecurityConfig {
 
         provider.setPasswordEncoder(bCryptPasswordEncoder());
 
-        provider.setUserDetailsService(customUserDetailService);
+        provider.setUserDetailsService(trackerUserDetailService);
 
         return provider;
     }
+
+    
 }

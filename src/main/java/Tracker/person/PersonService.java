@@ -33,8 +33,6 @@ public class PersonService {
 
         System.out.println("Creating admin profile...");
 
-        /* 
-
         if (person.isPresent()) {
             System.out.println("Admin already exists, aborting");
             return;
@@ -55,6 +53,6 @@ public class PersonService {
 
         personRepository.save(admin);
 
-        System.out.println("Admin profile created");*/
+        System.out.println("Admin profile created");
     }
 }

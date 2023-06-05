@@ -14,17 +14,14 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class CustomUserDetailService implements UserDetailsService {
+public class TrackerUserDetailService implements UserDetailsService {
     
-    private final PersonRepository personRepository;
+    private PersonRepository personRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Person person = personRepository.findByUsername(username).orElse(null);
-        
-        if (person == null) {
-            throw new UsernameNotFoundException(username);
-        }
+        Person person = personRepository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException(username));
 
         return new User(username, person.getPassword(), Collections.emptyList());
     }
