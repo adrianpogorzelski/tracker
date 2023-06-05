@@ -55,4 +55,12 @@ public class PersonService {
 
         System.out.println("Admin profile created");
     }
+
+    public Optional<Person> findById(Long id) {
+        return personRepository.findById(id);
+    }
+
+    public void delete(Long id) {
+        personRepository.deleteById(id);
+    }
 }

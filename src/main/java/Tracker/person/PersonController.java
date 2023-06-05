@@ -2,8 +2,11 @@ package Tracker.person;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class PersonController {
 
     final private PersonService personService;
+    final private MessageSource messageSource;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -77,5 +81,57 @@ public class PersonController {
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(normalizedString).replaceAll("")
                 .replaceAll("[^a-zA-Z0-9]", "");
+    }
+
+    @GetMapping("/{id}")
+    ModelAndView details(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("/people/details");
+        Optional<Person> personOptional = personService.findById(id);
+        if (personOptional.isPresent()) {
+            Person person = personOptional.get();
+            modelAndView.addObject("person", person);
+        } else {
+            String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
+            modelAndView.addObject("errorMessage", errorMessage);
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}/edit")
+    ModelAndView edit(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("/people/edit");
+        Optional<Person> personOptional = personService.findById(id);
+        
+        if (personOptional.isPresent()) {
+            Person person = personOptional.get();
+            modelAndView.addObject("person", person);
+
+        } else {
+            String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
+            modelAndView.addObject("errorMessage", errorMessage);
+        }
+        
+        return modelAndView;
+    }
+    
+    @PostMapping("/{id}/update")
+    public String update(@PathVariable Long id, @ModelAttribute("project") Person updatedPerson) {
+        Optional<Person> projectOptional = personService.findById(id);
+
+        if (projectOptional.isPresent()) {
+            Person person = projectOptional.get();
+            person.setFirstName(updatedPerson.getFirstName());
+            person.setLastName(updatedPerson.getLastName());
+            personService.save(person);
+        }
+
+        return "redirect:/projects";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        personService.delete(id);
+        return "redirect:/projects";
     }
 }
