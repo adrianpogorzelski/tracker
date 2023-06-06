@@ -39,11 +39,13 @@ public class Project {
     @Column(nullable = false)
     private LocalDateTime dateCreated;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project")
     private List<Task> tasks;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "manager_id")
+    @ManyToOne
+    @JoinColumn(name = "manager_id", nullable = true)
     private Person manager;
 
+    @Column
+    private Boolean enabled;
 }

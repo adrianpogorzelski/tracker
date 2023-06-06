@@ -23,6 +23,11 @@ public class TrackerUserDetailService implements UserDetailsService {
         Person person = personRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException(username));
 
+        // Only allow enabled users to log in
+        if (!person.getEnabled()) {
+            throw new UsernameNotFoundException(username);
+        }
+
         return new User(username, person.getPassword(), Collections.emptyList());
     }
 }

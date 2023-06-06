@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.resource.transaction.spi.DdlTransactionIsolator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -74,18 +75,29 @@ public class TaskController {
     @PostMapping("/save")
     ModelAndView saveTask(@ModelAttribute @Valid Task task, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("redirect:/tasks");
-
+    
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("tasks/new");
             modelAndView.addObject("task", task);
+    
+            List<Project> projects = projectService.findAll();
+            modelAndView.addObject("projects", projects);
+    
+            List<Person> people = personService.findAll();
+            modelAndView.addObject("people", people);
+    
+            modelAndView.addObject("taskTypes", TaskType.values());
+    
             return modelAndView;
         }
-
+    
         task.setDateCreated(LocalDateTime.now());
         task.setTaskStatus(TaskStatus.BACKLOG);
+        
         taskService.save(task);
         return modelAndView;
     }
+    
 
     @GetMapping("/{id}")
     ModelAndView details(@PathVariable Long id) {
@@ -136,8 +148,13 @@ public class TaskController {
             Task task = taskOptional.get();
             task.setName(updatedTask.getName());
             task.setDescription(updatedTask.getDescription());
-            task.setProject(updatedTask.getProject());
             task.setAssignee(updatedTask.getAssignee());
+
+            Project selectedProject = updatedTask.getProject();
+            Optional<Project> projectOptional = projectService.findById(selectedProject.getId());
+            Project project = projectOptional.get();
+            task.setProject(project);
+            
             taskService.save(task);
         }
 

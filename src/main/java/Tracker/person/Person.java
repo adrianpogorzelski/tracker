@@ -54,10 +54,13 @@ public class Person {
     @Column
     private String role;
 
-    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "manager")
     private List<Project> managedProjects;
-    
-    @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "assignee")
     private List<Task> tasks;
+
+    @Column
+    private Boolean enabled;
     
 }

@@ -67,4 +67,5 @@ public class PersonService {
     public Optional<Person> findByUsername(String username) {
         return personRepository.findByUsername(username);
     }
+
 }
