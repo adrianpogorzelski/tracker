@@ -10,7 +10,11 @@
         <h2 th:text="#{common.details}"></h2>
     </div>
 
-    <div>
+    <div th:if="${!person.enabled}">
+        <h2>User account disabled</h2>
+    </div>
+
+    <div th:unless="${!person.enabled}">
         <p th:text="${person.firstName}"></p>
     </div>
 

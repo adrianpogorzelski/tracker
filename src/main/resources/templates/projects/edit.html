@@ -46,6 +46,7 @@
 
             <select class="col-10 form-select" th:field="*{manager.id}">
                 <option th:each="person : ${people}"
+                        th:if="${person.enabled}"
                         th:value="${person.id}"
                         th:text="${person.firstName} + ' ' + ${person.lastName}">
                 </option>

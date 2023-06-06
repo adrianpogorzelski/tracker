@@ -42,6 +42,7 @@
         <div class="col">
             <select id="status-filter" class="form-select" th:field="*{assignee.id}">
                 <option th:each="person : ${people}"
+
                         th:value="${person.getId()}"
                         th:text="${person.getFirstName()} + ' ' + ${person.getLastName()}">
                 </option>
@@ -98,7 +99,8 @@
             </div>
             <div>
                 <span th:text="#{tasks.assignee} + ': '"></span>
-                <a th:href="@{/people/{id}(id=${task.assignee?.id})}" class="card-link" th:text="${task.assignee.firstName} + ' ' + ${task.assignee.lastName}"></a>
+                <a th:if="${task.assignee.enabled}" class="card-link" th:href="@{/people/{id}(id=${task.assignee.id})}" th:text="${task.assignee.firstName + ' ' + task.assignee.lastName}"></a>
+                <span th:if="${!task.assignee.enabled}" class="text-decoration-line-through text-muted" th:text="${task.assignee.firstName + ' ' + task.assignee.lastName}"></span>
             </div> 
         </div>
     </div>

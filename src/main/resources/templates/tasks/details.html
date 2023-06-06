@@ -12,7 +12,13 @@
 
     <h2 th:text="${task.name}"></h2>
     <p th:text="${task.description}"></p>
-    <p th:text="#{tasks.assignee} + ': ' + ${task.assignee.firstName} + ' ' + ${task.assignee.lastName}"></p>
+    <p>
+        <span th:text="#{tasks.assignee} + ': '"></span>
+        <span th:class="${!task.assignee.enabled} ? 'text-muted text-decoration-line-through' : ''">
+            [[${task.assignee.firstName}]] [[${task.assignee.lastName}]]
+        </span>
+    </p>
+    
 </section>    
 
 </html>

@@ -45,8 +45,10 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskType taskType = TaskType.REQUEST;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "assignee_id")
+    @ManyToOne
+    @JoinColumn(name = "assignee_id", nullable = true)
     private Person assignee;
-    
+
+    @Column
+    private Boolean enabled;
 }

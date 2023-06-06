@@ -71,6 +71,7 @@
 
             <select class="form-select" th:field="*{assignee.id}">
                 <option th:each="person : ${people}"
+                        th:if="${person.enabled}"
                         th:value="${person.id}"
                         th:text="${person.firstName} + ' ' + ${person.lastName}">
                 </option>

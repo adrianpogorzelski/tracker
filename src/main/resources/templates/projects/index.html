@@ -57,7 +57,8 @@
             <p class="card-text" th:text="${project.description}"></p>
             <p class="card-text">
                 <span th:text="#{projects.manager} + ': '"></span>
-                <a class="card-link" th:href="@{/people/{id}(id=${project.manager.id})}" th:text="${project.manager.firstName + ' ' + project.manager.lastName}"></a>
+                <a th:if="${project.manager.enabled}" class="card-link" th:href="@{/people/{id}(id=${project.manager.id})}" th:text="${project.manager.firstName + ' ' + project.manager.lastName}"></a>
+                <span th:if="${!project.manager.enabled}" class="text-decoration-line-through text-muted" th:text="${project.manager.firstName + ' ' + project.manager.lastName}"></span>
             </p>
             <p class="card-text">
                 

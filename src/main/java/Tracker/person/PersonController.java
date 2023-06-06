@@ -63,14 +63,16 @@ public class PersonController {
         person.setPassword(encryptedPassword);
 
         // Set username (login) -> first letter of name + . + full last name (no special characters)
-        String username = removeSpecialCharacters(person.getLastName().toLowerCase())
+        String username = removeSpecialCharacters(person.getFirstName().toLowerCase())
                                 .substring(0, 1)
                                 .toLowerCase()
                             + "."
                             + removeSpecialCharacters(person.getLastName().toLowerCase());
         person.setUsername(username);
 
+        // Set date to now and mark the account as enabled
         person.setDateCreated(LocalDateTime.now());
+        person.setEnabled(true);
         
         personService.save(person);
         return modelAndView;
@@ -117,21 +119,38 @@ public class PersonController {
     
     @PostMapping("/{id}/update")
     public String update(@PathVariable Long id, @ModelAttribute("project") Person updatedPerson) {
-        Optional<Person> projectOptional = personService.findById(id);
+        Optional<Person> optional = personService.findById(id);
 
-        if (projectOptional.isPresent()) {
-            Person person = projectOptional.get();
+        if (optional.isPresent()) {
+            Person person = optional.get();
             person.setFirstName(updatedPerson.getFirstName());
             person.setLastName(updatedPerson.getLastName());
             personService.save(person);
         }
 
-        return "redirect:/projects";
+        return "redirect:/";
     }
 
+    // Delete the account and all related tasks and projects
+    // The idea is to make this available only to admins to delete old unused accounts (and as a workaround to cascade deleting problem...)
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
         personService.delete(id);
-        return "redirect:/projects";
+        return "redirect:/";
     }
+
+    // Set the account to disabled - cannot log in, but tasks and projects are NOT deleted
+    @GetMapping("/{id}/disable")
+    public String disable(@PathVariable Long id, @ModelAttribute("project") Person updatedPerson) {
+        Optional<Person> optional = personService.findById(id);
+
+        if (optional.isPresent()) {
+            Person person = optional.get();
+            person.setEnabled(false);
+            personService.save(person);
+        }
+
+        return "redirect:/"; 
+    }
+
 }
