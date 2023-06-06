@@ -2,6 +2,7 @@ package Tracker.project;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import Tracker.person.Person;
 import Tracker.task.Task;
@@ -31,14 +32,18 @@ public class Project {
     @NotEmpty
     private String description;
 
+    @OneToOne
+    @JoinColumn(name = "creator_id")
+    private Person creator;
+
     @Column(nullable = false)
     private LocalDateTime dateCreated;
 
-    @Column
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
-
-    @ManyToOne
+    
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manager_id")
     private Person manager;
+
 }

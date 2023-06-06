@@ -1,5 +1,6 @@
 package Tracker.project;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +52,7 @@ public class ProjectController {
     }
 
     @PostMapping("/save")
-    ModelAndView save(@ModelAttribute @Valid Project project, BindingResult bindingResult) {
+    ModelAndView save(@ModelAttribute @Valid Project project, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("redirect:/projects");
 
         if (bindingResult.hasErrors()) {
@@ -59,6 +60,11 @@ public class ProjectController {
             modelAndView.addObject("project", project);
             return modelAndView;
         }
+
+        String sessionUsername = principal.getName();
+        Optional<Person> creatorOptional = personService.findByUsername(sessionUsername);
+        Person creator = creatorOptional.get();
+        project.setCreator(creator);
 
         project.setDateCreated(LocalDateTime.now());
         projectService.save(project);

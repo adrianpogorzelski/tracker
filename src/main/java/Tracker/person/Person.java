@@ -54,9 +54,10 @@ public class Person {
     @Column
     private String role;
 
-    @OneToMany(mappedBy = "manager")
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> managedProjects;
-
-    @OneToMany(mappedBy = "assignee")
+    
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
+    
 }
