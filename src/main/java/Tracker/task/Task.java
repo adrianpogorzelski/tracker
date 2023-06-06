@@ -33,7 +33,7 @@ public class Task {
     @Column(nullable = false)
     private LocalDateTime dateCreated;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
     private Project project;
 
@@ -44,8 +44,9 @@ public class Task {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskType taskType = TaskType.REQUEST;
-
-    @ManyToOne
+    
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assignee_id")
     private Person assignee;
+    
 }
