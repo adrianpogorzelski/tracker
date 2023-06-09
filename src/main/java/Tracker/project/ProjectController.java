@@ -18,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Tracker.person.Person;
 import Tracker.person.PersonService;
+import Tracker.task.TaskStatus;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -79,6 +81,7 @@ public class ProjectController {
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             modelAndView.addObject("project", project);
+            modelAndView.addObject("taskStatuses", TaskStatus.values());
         } else {
             String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
             modelAndView.addObject("errorMessage", errorMessage);
@@ -126,4 +129,5 @@ public class ProjectController {
         projectService.delete(id);
         return "redirect:/projects";
     }
+
 }
