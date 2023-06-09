@@ -130,4 +130,19 @@ public class ProjectController {
         return "redirect:/projects";
     }
 
+    // Set the project to disabled - does NOT REMOVE related users and tasks
+    @GetMapping("/{id}/disable")
+    public String disable(@PathVariable Long id, @ModelAttribute("project") Project updatedProject) {
+        Optional<Project> optional = projectService.findById(id);
+
+        if (optional.isPresent()) {
+            Project project = optional.get();
+            project.setEnabled(false);
+            projectService.save(project);
+   
+        }
+
+        return "redirect:/projects"; 
+    }
+
 }

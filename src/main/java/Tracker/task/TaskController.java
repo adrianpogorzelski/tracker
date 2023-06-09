@@ -194,4 +194,20 @@ public class TaskController {
         Long projectId = task.getProject().getId();
         return "redirect:/projects/" + projectId;
     }
+
+    // Set the task to disabled - does NOT REMOVE related users and projects
+    @GetMapping("/{id}/disable")
+    public String disable(@PathVariable Long id, @ModelAttribute("project") Task updatedTask) {
+        Optional<Task> optional = taskService.findById(id);
+
+        if (optional.isPresent()) {
+            Task task = optional.get();
+            task.setEnabled(false);
+            taskService.save(task);
+   
+        }
+
+        return "redirect:/tasks"; 
+    }
+
 }
