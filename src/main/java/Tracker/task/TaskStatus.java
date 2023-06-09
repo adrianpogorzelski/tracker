@@ -1,5 +1,5 @@
 package Tracker.task;
 
 public enum TaskStatus {
-    BACKLOG, ACTIVE, DONE
+    BACKLOG, IN_PROGRESS, DONE
 }

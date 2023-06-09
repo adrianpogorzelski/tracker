@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import Tracker.person.Person;
@@ -165,5 +166,32 @@ public class TaskController {
     public String delete(@PathVariable Long id) {
         taskService.delete(id);
         return "redirect:/tasks";
+    }
+
+    @GetMapping("/{id}/change-status")
+    public String changeStatus(@PathVariable Long id, @RequestParam("direction") String direction) {
+        Task task = taskService.findById(id).orElse(null);
+
+        if (task != null) {
+            TaskStatus[] taskStatuses = TaskStatus.values();
+            TaskStatus currentStatus = task.getTaskStatus();
+
+            int currentIndex = currentStatus.ordinal();
+            int newIndex;
+
+            if (direction.equals("next")) {
+                newIndex = (currentIndex + 1) % taskStatuses.length; 
+            } else {
+                newIndex = (currentIndex - 1 + taskStatuses.length) % taskStatuses.length;
+            }
+
+            TaskStatus newStatus = taskStatuses[newIndex];
+            task.setTaskStatus(newStatus);
+
+            taskService.save(task);
+        }
+
+        Long projectId = task.getProject().getId();
+        return "redirect:/projects/" + projectId;
     }
 }
