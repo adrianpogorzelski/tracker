@@ -125,10 +125,16 @@ public class PersonController {
             Person person = optional.get();
             person.setFirstName(updatedPerson.getFirstName());
             person.setLastName(updatedPerson.getLastName());
+            person.setUsername(updatedPerson.getUsername());
+            if (updatedPerson.getPassword() != null) {
+                String encryptedPassword = bCryptPasswordEncoder.encode(updatedPerson.getPassword());
+                person.setPassword(encryptedPassword);
+            
+            person.setEmail(updatedPerson.getEmail());}
             personService.save(person);
         }
 
-        return "redirect:/";
+        return "redirect:/people";
     }
 
     // Delete the account and all related tasks and projects
