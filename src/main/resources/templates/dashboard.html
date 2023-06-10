@@ -6,104 +6,29 @@
 
 <section layout:fragment="custom-content">
 
-    <h2 class="mt-5 mb-3 pt-5 border-bottom">Dashboard</h2>
-    <section class="my-3">
+    <h2 class="mt-5 mb-3 pt-5">Dashboard</h2>
+    
+    <div class="my-3">
         <h3>Your projects</h3>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
+        <div th:each="project : ${projects}">
+            <a class="card w-100"
+                th:if="${project.manager.username == principal.username}"
+                th:href="@{/projects/{id}(id=${project.id})}">
+                <h4 th:text="${project.name}"></h4>
+                <p th:text="${project.description}"></p>
+            </a>
         </div>
+    </div>
 
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="my-3">
+    <div class="my-3">
         <h3>Your tasks</h3>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-
-        <div class="card w-100 my-2">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-            </div>
-        </div>
-    </section>
+        <div th:each="task : ${tasks}">
+          <div class="card w-100" th:if="${task.assignee.username == principal.username}">
+              <h4 th:text="${task.name}"></h4>
+              <p th:text="${task.description}"></p>
+          </div>
+      </div>
+    </div>
 
 </section>
 

@@ -19,6 +19,10 @@ public class TaskService {
         return taskRepository.findAll(specification);
     }
 
+    public Iterable<Task> findAll() {
+        return taskRepository.findAll();
+    }
+
     public void save(@Valid Task task) {
         taskRepository.save(task);
     }
