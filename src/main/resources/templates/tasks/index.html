@@ -19,7 +19,8 @@
         <!-- Project -->
         <div class="col">
             <select id="projects-filter" class="form-select" th:field="*{project.id}">
-                <option th:value="${null}" th:text="#{projects.title}" selected hidden></option>
+                <option th:value="${null}" th:text="#{projects.title}" selected></option>
+                <optgroup label="---"></optgroup>
                 <option th:each="project : ${projects}"
                         th:value="${project.getId()}"
                         th:text="${project.getName()}">
@@ -30,6 +31,8 @@
         <!-- Status -->
         <div class="col">
             <select id="status-filter" class="form-select" th:field="*{taskStatus}">
+                <option th:value="${null}" selected>Status</option>
+                <optgroup label="---"></optgroup>
                 <option th:each="status : ${taskStatus}"
                         th:value="${status}"
                         th:text="${status}">
@@ -40,9 +43,10 @@
         
         <!-- Assignee -->
         <div class="col">
-            <select id="status-filter" class="form-select" th:field="*{assignee.id}">
+            <select id="assignee-filter" class="form-select" th:field="*{assignee.id}">
+                <option th:value="${null}" th:text="#{assignee.title}" selected></option>
+                <optgroup label="---"></optgroup>
                 <option th:each="person : ${people}"
-
                         th:value="${person.getId()}"
                         th:text="${person.getFirstName()} + ' ' + ${person.getLastName()}">
                 </option>
