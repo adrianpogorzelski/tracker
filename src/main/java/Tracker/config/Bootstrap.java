@@ -16,12 +16,12 @@ public class Bootstrap implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println("Application starting...");
+        System.out.println("\n*** Application starting...");
 
-        personService.saveAdmin();
         authorityService.saveAuthorities();
+        personService.saveAdmin();
 
-        System.out.println("Application ready");
+        System.out.println("\n*** Application ready");
 
     }
 }

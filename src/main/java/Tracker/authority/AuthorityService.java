@@ -1,5 +1,7 @@
 package Tracker.authority;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -11,12 +13,15 @@ public class AuthorityService {
     private final AuthorityRepository authorityRepository;
     
  public void saveAuthorities() {
+    System.out.println("*** Creating authorities...");
         for (AuthorityName authorityName : AuthorityName.values()) {
-            if (!authorityRepository.findByName(authorityName).isPresent()) {
+            Optional<Authority> existingAuthority = authorityRepository.findByName(authorityName);
+
+            if (!existingAuthority.isPresent()) {
                 Authority authority = new Authority();
-                authority.setName(authorityName);
                 authorityRepository.save(authority);
             }
         }
+    System.out.println("*** Authorities created");
     }
 }
