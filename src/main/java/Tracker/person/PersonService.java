@@ -40,7 +40,6 @@ public class PersonService {
 
         Person admin = new Person();
         admin.setUsername(username);
-
         admin.setDateCreated(LocalDateTime.now());
         admin.setEmail(username);
         admin.setFirstName(username);
