@@ -6,8 +6,13 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import Tracker.authority.Authority;
 import Tracker.project.Project;
@@ -57,7 +62,7 @@ public class Person {
     @JoinTable(name = "person_authorities",
                 joinColumns = @JoinColumn(name = "person_id"),
                 inverseJoinColumns = @JoinColumn(name = "authority_id"))
-    Set<Authority> authorities;
+    private Set<Authority> authorities;
 
     @OneToMany(mappedBy = "manager")
     private List<Project> managedProjects;

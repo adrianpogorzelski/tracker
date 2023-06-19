@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/people")
 @RequiredArgsConstructor
+@Secured("ROLE_USER_TAB")
 public class PersonController {
 
     final private PersonService personService;

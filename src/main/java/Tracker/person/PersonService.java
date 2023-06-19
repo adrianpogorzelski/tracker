@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import Tracker.authority.Authority;
-import Tracker.authority.AuthorityName;
 import Tracker.authority.AuthorityRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +39,7 @@ public class PersonService {
         System.out.println("\n*** Creating admin profile...");
 
         if (person.isPresent()) {
-            System.out.println("\n*** Admin already exists, aborting");
+            System.out.println("\n*** Admin profile already exists");
             return;
         }
 
@@ -52,6 +51,7 @@ public class PersonService {
         admin.setLastName(username);
         admin.setManagedProjects(null);
         admin.setTasks(null);
+        admin.setEnabled(true);
 
         // Fetch all available authorities from the database
         List<Authority> allAuthorities = authorityRepository.findAll();
