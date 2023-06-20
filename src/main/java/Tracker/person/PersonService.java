@@ -1,12 +1,16 @@
 package Tracker.person;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import Tracker.authority.Authority;
+import Tracker.authority.AuthorityRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +20,7 @@ public class PersonService {
 
     final private PersonRepository personRepository;
     final private BCryptPasswordEncoder bCryptPasswordEncoder;
+    final private AuthorityRepository authorityRepository;
 
     public List<Person> findAll() {
         return personRepository.findAll();
@@ -31,22 +36,32 @@ public class PersonService {
 
         Optional<Person> person = personRepository.findByUsername(username);
 
-        System.out.println("Creating admin profile...");
+        System.out.println("\n*** Creating admin profile...");
 
         if (person.isPresent()) {
-            System.out.println("Admin already exists, aborting");
+            System.out.println("\n*** Admin profile already exists");
             return;
         }
 
         Person admin = new Person();
         admin.setUsername(username);
-
         admin.setDateCreated(LocalDateTime.now());
         admin.setEmail(username);
         admin.setFirstName(username);
         admin.setLastName(username);
         admin.setManagedProjects(null);
         admin.setTasks(null);
+        admin.setEnabled(true);
+
+        // Fetch all available authorities from the database
+        List<Authority> allAuthorities = authorityRepository.findAll();
+
+        Set<Authority> authorities = new HashSet<>();
+        for (Authority authority : allAuthorities) {
+            authorities.add(authority);
+        }
+
+        admin.setAuthorities(authorities);
 
         String hashedPassword = bCryptPasswordEncoder.encode(password);
         admin.setPassword(hashedPassword);

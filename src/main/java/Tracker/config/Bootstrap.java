@@ -3,6 +3,7 @@ package Tracker.config;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
+import Tracker.authority.AuthorityService;
 import Tracker.person.PersonService;
 import lombok.AllArgsConstructor;
 
@@ -11,14 +12,16 @@ import lombok.AllArgsConstructor;
 public class Bootstrap implements InitializingBean {
 
     private PersonService personService;
+    private AuthorityService authorityService;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println("Application starting...");
+        System.out.println("\n*** Application starting...");
 
+        authorityService.saveAuthorities();
         personService.saveAdmin();
 
-        System.out.println("Application ready");
+        System.out.println("\n*** Application ready");
 
     }
 }

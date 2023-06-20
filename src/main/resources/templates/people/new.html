@@ -87,6 +87,18 @@
         
         </div>
     
+        <!-- AUTHORITIES -->
+        <div>
+                <p th:each="authority : ${authorities}">
+                        <label th:text="#{${'authority.' + authority.name}}"
+                                ></label>
+                        <input type="checkbox"
+                                name="authorities"
+                                th:value="${authority.id}"
+                                th:field="*{authorities}"
+                        />
+                </p>
+        </div>
     
     <!-- BUTTONS -->
     <button class="btn btn-outline-danger">
