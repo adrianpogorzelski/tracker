@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,6 @@ import Tracker.person.Person;
 import Tracker.person.PersonService;
 import Tracker.task.TaskStatus;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -41,6 +41,7 @@ public class ProjectController {
     }
 
     @GetMapping("/new")
+    @Secured("ROLE_MANAGE_PROJECT")
     ModelAndView newProject() {
         ModelAndView modelAndView = new ModelAndView("/projects/new");
 
@@ -54,6 +55,7 @@ public class ProjectController {
     }
 
     @PostMapping("/save")
+    @Secured("ROLE_MANAGE_PROJECT")
     ModelAndView save(@ModelAttribute @Valid Project project, BindingResult bindingResult, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("redirect:/projects");
 
@@ -91,6 +93,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/edit")
+    @Secured("ROLE_MANAGE_PROJECT")
     ModelAndView edit(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("/projects/edit");
         Optional<Project> projectOptional = projectService.findById(id);
@@ -110,6 +113,7 @@ public class ProjectController {
     }
     
     @PostMapping("/{id}/update")
+    @Secured("ROLE_MANAGE_PROJECT")
     public String update(@PathVariable Long id, @ModelAttribute("project") Project updatedProject) {
         Optional<Project> projectOptional = projectService.findById(id);
 
@@ -125,6 +129,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/delete")
+    @Secured("ROLE_MANAGE_PROJECT")
     public String delete(@PathVariable Long id) {
         projectService.delete(id);
         return "redirect:/projects";
@@ -132,6 +137,7 @@ public class ProjectController {
 
     // Set the project to disabled - does NOT REMOVE related users and tasks
     @GetMapping("/{id}/disable")
+    @Secured("ROLE_MANAGE_PROJECT")
     public String disable(@PathVariable Long id, @ModelAttribute("project") Project updatedProject) {
         Optional<Project> optional = projectService.findById(id);
 

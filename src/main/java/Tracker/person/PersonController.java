@@ -14,6 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import Tracker.authority.Authority;
+import Tracker.authority.AuthorityRepository;
+
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
@@ -23,16 +26,17 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("/people")
 @RequiredArgsConstructor
-@Secured("ROLE_USER_TAB")
 public class PersonController {
 
     final private PersonService personService;
     final private MessageSource messageSource;
+    final private AuthorityRepository authorityRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping
+    @Secured("ROLE_USER_TAB")
     ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/people/index");
         List<Person> people = personService.findAll();
@@ -41,8 +45,12 @@ public class PersonController {
     }
 
     @GetMapping("/new")
+    @Secured("ROLE_MANAGE_USERS")
     ModelAndView newPerson() {
         ModelAndView modelAndView = new ModelAndView("/people/new");
+
+        List<Authority> authorities = authorityRepository.findAll();
+        modelAndView.addObject("authorities", authorities);
 
         Person person = new Person();
         modelAndView.addObject("person", person);
@@ -51,6 +59,7 @@ public class PersonController {
     }
 
     @PostMapping("/save")
+    @Secured("ROLE_MANAGE_USERS")
     ModelAndView save(@ModelAttribute @Valid Person person, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("redirect:/people");
 
@@ -103,6 +112,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}/edit")
+    @Secured("ROLE_MANAGE_USERS")
     ModelAndView edit(@PathVariable Long id) {
         ModelAndView modelAndView = new ModelAndView("/people/edit");
         Optional<Person> personOptional = personService.findById(id);
@@ -120,6 +130,7 @@ public class PersonController {
     }
     
     @PostMapping("/{id}/update")
+    @Secured("ROLE_MANAGE_USERS")
     public String update(@PathVariable Long id, @ModelAttribute("project") Person updatedPerson) {
         Optional<Person> optional = personService.findById(id);
 
@@ -142,6 +153,7 @@ public class PersonController {
     // Delete the account and all related tasks and projects
     // The idea is to make this available only to admins to delete old unused accounts (and as a workaround to cascade deleting problem...)
     @GetMapping("/{id}/delete")
+    @Secured("ROLE_MANAGE_USERS")
     public String delete(@PathVariable Long id) {
         personService.delete(id);
         return "redirect:/";
@@ -149,6 +161,7 @@ public class PersonController {
 
     // Set the account to disabled - cannot log in, but tasks and projects are NOT deleted
     @GetMapping("/{id}/disable")
+    @Secured("ROLE_MANAGE_USERS")
     public String disable(@PathVariable Long id, @ModelAttribute("project") Person updatedPerson) {
         Optional<Person> optional = personService.findById(id);
 
