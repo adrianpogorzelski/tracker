@@ -139,11 +139,13 @@ public class PersonController {
             person.setFirstName(updatedPerson.getFirstName());
             person.setLastName(updatedPerson.getLastName());
             person.setUsername(updatedPerson.getUsername());
+            person.setEmail(updatedPerson.getEmail());
+
             if (updatedPerson.getPassword() != null) {
                 String encryptedPassword = bCryptPasswordEncoder.encode(updatedPerson.getPassword());
                 person.setPassword(encryptedPassword);
-            
-            person.setEmail(updatedPerson.getEmail());}
+            }
+
             personService.save(person);
         }
 

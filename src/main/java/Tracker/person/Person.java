@@ -2,17 +2,14 @@ package Tracker.person;
 
 import lombok.Data;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import Tracker.authority.Authority;
 import Tracker.project.Project;
@@ -21,6 +18,7 @@ import Tracker.task.Task;
 
 @Entity
 @Data
+@ValidPasswords
 public class Person {
     
     @Id
@@ -52,6 +50,9 @@ public class Person {
     @Size(min=8)
     private String password;
 
+    @Transient
+    String repeatedPassword;
+
     @Column(nullable = false)
     @NotNull
     @NotEmpty
@@ -71,6 +72,5 @@ public class Person {
     private List<Task> tasks;
 
     @Column
-    private Boolean enabled;
-    
+    private Boolean enabled;    
 }

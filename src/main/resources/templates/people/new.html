@@ -79,12 +79,18 @@
 
        <!-- Confirm -->
         <div class="my-3">
-                <label for="confirm-password" th:text="#{people.confirmPassword}"></label>
+                <label for="repeated-password" th:text="#{people.confirmPassword}"></label>
                 <input type="password" 
-                        class="form-control" 
-                        id="confirm-password" 
-                        th:placeholder="#{people.confirmPassword}">
-        
+                        id="repeated-password" 
+                        th:placeholder="#{people.confirmPassword}"
+                        th:field="*{repeatedPassword}"
+                        th:class="'form-control ' + ${#fields.hasErrors('repeatedPassword') ? 'is-invalid' : ''}">
+
+                <!-- Errors -->
+                <div class="alert alert-warning mt-1"
+                        th:errors="*{repeatedPassword}"
+                        th:if="${#fields.hasErrors('repeatedPassword')}">
+                </div>                
         </div>
     
         <!-- AUTHORITIES -->
