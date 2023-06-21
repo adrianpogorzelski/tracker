@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -175,5 +176,33 @@ public class PersonController {
 
         return "redirect:/"; 
     }
+
+    // Edit own account
+    // Separate from standard {id}, because getting id from principal DOES NOT WORK ON NAVBAR
+    @GetMapping("/settings/{username}")
+    public ModelAndView accountSettings(@PathVariable String username, Authentication authentication) {
+
+        // Check if logged in user == the user in the link
+        String loggedInUsername = authentication.getName();
+        
+        if (!loggedInUsername.equals(username)) {
+            ModelAndView forbidden = new ModelAndView("/errors/403");
+            return forbidden;
+        }
+        
+        // Get user's id and redirect
+        Optional<Person> personOptional = personService.findByUsername(loggedInUsername);
+
+        if (personOptional.isPresent()) {
+            ModelAndView modelAndView = new ModelAndView("/people/account");
+            Person person = personOptional.get();
+            modelAndView.addObject("person", person);
+            return modelAndView;
+        }
+
+        ModelAndView notFound = new ModelAndView("/errors/404");
+        return notFound;
+    }
+
 
 }

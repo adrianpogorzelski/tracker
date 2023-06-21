@@ -1,0 +1,167 @@
+<html layout:decorate="~{/layout/layout}">
+
+<head>
+    <title th:text="'Tracker - ' + #{common.details}"></title>
+</head>
+
+<section layout:fragment="custom-content">
+
+    <div class="mt-5 pt-5 navbar">
+        <h2 th:text="#{common.details}"></h2>
+    </div>
+
+    <form th:action="@{/people/{id}/update(id=${person.id})}" th:object="${person}" method="post">
+        <!-- FIRST NAME -->
+          <div class="mb-3">
+            <label for="first-name" class="form-label" th:text="#{person.firstName}"></label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="first-name" 
+                    th:field="*{firstName}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{firstName}"
+                    th:if="${#fields.hasErrors('firstName')}">
+            </div>
+        </div>
+
+        <!-- LAST NAME -->
+        <div class="mb-3">
+            <label for="last-name" class="form-label" th:text="#{person.lastName}"></label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="last-name" 
+                    th:field="*{lastName}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{lastName}"
+                    th:if="${#fields.hasErrors('lastName')}">
+            </div>
+        </div>
+        
+        <!-- USERNAME -->
+        <div class="mb-3">
+            <label for="username" class="form-label" th:text="#{person.username}"></label>
+
+            <input type="text" 
+                    class="form-control" 
+                    id="username" 
+                    th:field="*{username}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{username}"
+                    th:if="${#fields.hasErrors('username')}">
+            </div>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+            <label for="password" class="form-label" th:text="#{common.password}"></label>
+
+            <input type="password" 
+                    class="form-control" 
+                    id="password" 
+                    th:field="*{password}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{password}"
+                    th:if="${#fields.hasErrors('password')}">
+            </div>
+        </div>
+
+        <!-- E-MAIL -->
+        <div class="mb-3">
+            <label for="email" class="form-label" th:text="#{person.email}"></label>
+
+            <input type="email" 
+                    class="form-control" 
+                    id="email" 
+                    th:field="*{email}">
+
+            <!-- Errors -->
+            <div class="alert alert-warning mt-1"
+                    th:errors="*{email}"
+                    th:if="${#fields.hasErrors('email')}">
+            </div>
+        </div>
+
+        <!-- ROLE -->
+        <div class="mb-3">
+            <label for="role" class="form-label" th:text="#{person.role}"></label>
+        </div>
+
+        <!-- BUTTONS -->
+        <button class="btn btn-outline-danger">
+            <a class="dropdown-item" 
+                aria-current="page" 
+                th:href="@{/people}"
+                th:text="#{common.cancel}"></a>
+        </button>
+        <button type="submit"
+                class="btn btn-primary"
+            th:text="#{common.save}">
+        </button>
+
+    </form>
+
+    <!-- DISABLE -->
+    <div class="btn btn-outline-danger justify-self-start" data-bs-toggle="modal" data-bs-target="#confirmdisable">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-x" viewBox="0 0 16 16">
+            <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708Z"/>
+          </svg>
+        <span th:text="#{common.disable}"></span>
+    </div>
+    
+    <!-- Confirm  modal -->
+    <div class="modal fade" id="confirmdisable" tabindex="-1" aria-labelledby="confirmdisableLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmdisableLabel" th:text="#{common.confirmdisable}"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <span th:text="#{disable.text}"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="btn btn-secondary" data-bs-dismiss="modal">
+                        <div class="d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-x" viewBox="0 0 16 16">
+                                <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"/>
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708Z"/>
+                              </svg>
+                            <a class="nav-link" 
+                                th:text="#{common.cancel}">
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Confirm disable -->
+                    <a th:href="@{/people/{id}/disable(id=${person.id})}">
+                        <button class="btn btn-outline-danger justify-self-start" data-bs-toggle="modal" data-bs-target="#confirmdisable">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                            </svg>
+                            <span th:text="#{common.disable}"></span>
+                        </button>                       
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</section>    
+
+</html>

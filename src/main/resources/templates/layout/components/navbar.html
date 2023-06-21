@@ -35,8 +35,12 @@
                     </svg>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Account</a></li>
-                  <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" 
+                            th:href="@{/people/settings/{username}(username=${#authentication.getPrincipal().getUsername()})}"
+                            th:text="#{person.edit}">
+
+                    </a></li>
+                    <li><hr class="dropdown-divider"></li>
                   <li>
                     <form th:action="@{/logout}" method="post">
                         <button class="dropdown-item" type="submit">Log out</button>
