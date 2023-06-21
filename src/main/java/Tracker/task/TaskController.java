@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import Tracker.mail.Mail;
+import Tracker.mail.MailService;
 import Tracker.person.Person;
 import Tracker.person.PersonService;
 import Tracker.project.Project;
@@ -33,6 +35,7 @@ public class TaskController {
     final private ProjectService projectService;
     final private PersonService personService;
     final private MessageSource messageSource;
+    final private MailService mailService;
 
     @GetMapping
     ModelAndView index(@ModelAttribute TaskFilter filter) {
@@ -94,8 +97,15 @@ public class TaskController {
     
         task.setDateCreated(LocalDateTime.now());
         task.setTaskStatus(TaskStatus.BACKLOG);
+
+        Mail mail = new Mail();
+        mail.setRecipient(task.getAssignee().getEmail());
+        mail.setSubject("You have a new task");
+        mail.setContent("New task: " + task.getName());
+        mailService.sendMail(mail);
         
         taskService.save(task);
+
         return modelAndView;
     }
     
@@ -157,6 +167,8 @@ public class TaskController {
             task.setProject(project);
             
             taskService.save(task);
+
+
         }
 
         return "redirect:/tasks";
@@ -204,7 +216,14 @@ public class TaskController {
             Task task = optional.get();
             task.setEnabled(false);
             taskService.save(task);
-   
+
+            Mail mail = new Mail();
+            mail.setRecipient(task.getAssignee().getEmail());
+            mail.setSubject("Your task is closed");
+            mail.setContent("Closed task: " + task.getName());
+            mailService.sendMail(mail);
+            
+            taskService.save(task);
         }
 
         return "redirect:/tasks"; 
