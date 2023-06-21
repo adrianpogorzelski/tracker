@@ -216,7 +216,14 @@ public class TaskController {
             Task task = optional.get();
             task.setEnabled(false);
             taskService.save(task);
-   
+
+            Mail mail = new Mail();
+            mail.setRecipient(task.getAssignee().getEmail());
+            mail.setSubject("Your task is closed");
+            mail.setContent("Closed task: " + task.getName());
+            mailService.sendMail(mail);
+            
+            taskService.save(task);
         }
 
         return "redirect:/tasks"; 
