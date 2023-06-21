@@ -24,7 +24,7 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_seq_generator")
     @SequenceGenerator(name = "person_seq_generator", sequenceName = "person_SEQ", allocationSize = 1)
-    private Long id;
+    public Long id;
 
     @Column(nullable = false)
     private LocalDateTime dateCreated;
