@@ -66,7 +66,10 @@
             <div class="col">
                 <h5 class="card-title">
                     <span class="lead" th:text="'[ID: ' + ${task.id} + '] '"></span>
-                    <span th:text="${task.name}"></span></h5>
+                    <span th:text="${task.name}"></span>
+                    <span class="lead" th:text=" '[' + ${task.taskType} + '- '"></span>
+                    <span class="lead" th:text="${task.getTaskStatus()} + ']'"></span>
+                </h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary" th:text="#{common.dateCreated} + ${task.dateCreated}"></h6>
             </div>
             <div class="col text-end">
@@ -96,7 +99,6 @@
             </div>
 
             <p class="card-text" th:text="${task.description}"></p>
-            <p class="card-text" th:text="${task.taskType}"></p>
             <div>
                 <span th:text="#{projects.project} + ': '"></span>
                 <a th:href="@{/projects/{id}(id=${task.project?.id})}" class="card-link" th:text="${task.project.name}"></a>
