@@ -76,11 +76,11 @@
                 <h5 class="card-title">
                     <span class="lead" th:text="'[ID: ' + ${task.id} + '] '"></span>
                     <span th:text="${task.name}"></span>
-                    <span class="lead" th:text=" '[' + ${task.taskType} + '- '"></span>
-                    <span class="lead" th:text="${task.getTaskStatus()} + ']'"></span>
+                    <span class="lead" th:text="' [' + ${#strings.replace(#strings.capitalize(#strings.toLowerCase(task.taskType.toString())), '_', ' ')} + '] '"></span>
+                    <span class="lead" th:text="'[' + ${#strings.replace(#strings.capitalize(#strings.toLowerCase(task.getTaskStatus().toString())), '_', ' ')} + ']'"></span>
                 </h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary" th:text="#{common.dateCreated} + ${task.dateCreated}"></h6>
-            </div>
+            </div>            
             <div class="col text-end">
 
                 <!-- Details -->

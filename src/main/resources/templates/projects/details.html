@@ -12,8 +12,8 @@
 
     <div class="row">
         <div class="col bg-light mx-1" th:each="taskStatus : ${taskStatuses}">
-            <h5 class="text-center" th:text="${taskStatus}"></h5>
-            
+            <h5 class="text-center" th:text="${#strings.replace(#strings.capitalize(#strings.toLowerCase(taskStatus.toString())), '_', ' ')}"></h5>
+                    
             <!-- Tasks -->
             <div th:each="task : ${project.tasks}" th:if="${task.taskStatus == taskStatus}">
                 <div class="card-body row">
