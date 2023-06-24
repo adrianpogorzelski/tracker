@@ -69,7 +69,6 @@ public class TaskController {
         List<Person> people = personService.findAll();
         modelAndView.addObject("people", people);
 
-
         modelAndView.addObject("taskTypes", TaskType.values());
 
         return modelAndView;
@@ -159,6 +158,7 @@ public class TaskController {
             task.setName(updatedTask.getName());
             task.setDescription(updatedTask.getDescription());
             task.setAssignee(updatedTask.getAssignee());
+            task.setTaskType(updatedTask.getTaskType());
 
             Project selectedProject = updatedTask.getProject();
             Optional<Project> projectOptional = projectService.findById(selectedProject.getId());

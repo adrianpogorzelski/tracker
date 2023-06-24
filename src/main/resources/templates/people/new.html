@@ -5,9 +5,12 @@
 </head>
 
 <section layout:fragment="custom-content" class="container">
-    <h2 class="mt-5 mb-3 pt-5 border-bottom" th:text="#{people.new}"></h2>
+    <h2 class="display-4 mt-5 mb-3 pt-5" th:text="#{people.new}"></h2>
+    <hr>
 
     <form th:action="@{/people/save}" th:object="${person}" method="post">
+
+        <h3 th:text=#{common.details}></h3>
 
         <!-- PERSON FIRST NAME -->
         <div class="mb-3">
@@ -17,7 +20,9 @@
                     class="form-control" 
                     id="person-firstName" 
                     th:placeholder="#{people.firstNamePlaceholder}"
-                    th:field="*{firstName}">
+                    th:field="*{firstName}"
+                    required
+                    minlength="3">
 
             <!-- Errors -->
             <div class="alert alert-warning mt-1"
@@ -34,7 +39,9 @@
                     class="form-control" 
                     id="person-lastName" 
                     th:placeholder="#{people.lastNamePlaceholder}"
-                    th:field="*{lastName}">
+                    th:field="*{lastName}"
+                    required
+                    minlength="3">
 
             <!-- Errors -->
             <div class="alert alert-warning mt-1"
@@ -45,13 +52,14 @@
 
         <!-- EMAIL ADDRESS -->
         <div class="mb-3">
-            <label for="person-email" class="form-label" th:text="#{common.email}"></label>
+            <label for="person-email" class="form-label" th:text="#{people.email}"></label>
 
             <input type="email" 
                     class="form-control" 
                     id="person-email" 
                     th:placeholder="#{people.emailPlaceholder}"
-                    th:field="*{email}">
+                    th:field="*{email}"
+                    required>
 
             <!-- Errors -->
             <div class="alert alert-warning mt-1"
@@ -59,6 +67,8 @@
                     th:if="${#fields.hasErrors('email')}">
             </div>
         </div>
+
+        <h3 th:text="#{common.password}"></h3>
 
         <!-- PASSWORD -->
         <div>
@@ -68,7 +78,9 @@
                         class="form-control" 
                         id="password" 
                         th:placeholder="#{people.passwordPlaceholder}"
-                        th:field="*{password}"> 
+                        th:field="*{password}"
+                        required
+                        minlength="8 "> 
                         
                 <!-- Errors -->
                 <div class="alert alert-warning mt-1"
@@ -89,21 +101,23 @@
                 <!-- Errors -->
                 <div class="alert alert-warning mt-1"
                         th:errors="*{repeatedPassword}"
-                        th:if="${#fields.hasErrors('repeatedPassword')}">
+                        th:if="${#fields.hasErrors('repeatedPassword')}"
+                        th:errorcode="repeatedPassword.notMatch">
                 </div>                
         </div>
+
+        <h3 th:text="#{common.authorities}"></h3>
     
         <!-- AUTHORITIES -->
-        <div>
+        <div class="mb-4">
                 <p th:each="authority : ${authorities}">
-                        <label th:text="#{${'authority.' + authority.name}}"
-                                ></label>
                         <input type="checkbox"
                                 name="authorities"
                                 th:value="${authority.id}"
                                 th:field="*{authorities}"
                         />
-                </p>
+                        <label th:text="#{${'authority.' + authority.name}}"></label>
+                </p>    
         </div>
     
     <!-- BUTTONS -->

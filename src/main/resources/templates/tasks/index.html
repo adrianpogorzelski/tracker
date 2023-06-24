@@ -7,7 +7,7 @@
 <section layout:fragment="custom-content">
 
     <div class="mt-5 pt-5 navbar">
-        <h2 th:text="#{tasks.title}"></h2>
+        <h2 th:text="#{tasks.title}" class="display-4"></h2>
 
         <!-- New task -->
         <a class="nav-link" th:href="@{/tasks/new}"><button class="btn btn-primary" th:text="#{tasks.new}"></a>
@@ -35,7 +35,7 @@
                 <optgroup label="---"></optgroup>
                 <option th:each="status : ${taskStatus}"
                         th:value="${status}"
-                        th:text="${#strings.replace(#strings.capitalize(#strings.toLowerCase(status.name())), '_', ' ')}">
+                        th:text="#{${'task.' + status.name()}}">
                     </option>
             </select>    
         </div>
@@ -43,7 +43,7 @@
         <!-- Assignee -->
         <div class="col">
             <select id="assignee-filter" class="form-select" th:field="*{assignee.id}">
-                <option th:value="${null}" th:text="#{assignee.title}" selected></option>
+                <option th:value="${null}" th:text="#{tasks.assignee}" selected></option>
                 <optgroup label="---"></optgroup>
                 <option th:each="person : ${people}"
                         th:value="${person.getId()}"
@@ -67,7 +67,7 @@
                     <span class="lead" th:text="'[ID: ' + ${task.id} + '] '"></span>
                     <span th:text="${task.name}"></span>
                     <span class="lead" th:text="' [' + ${#strings.replace(#strings.capitalize(#strings.toLowerCase(task.taskType.toString())), '_', ' ')} + '] '"></span>
-                    <span class="lead" th:text="'[' + ${#strings.replace(#strings.capitalize(#strings.toLowerCase(task.getTaskStatus().toString())), '_', ' ')} + ']'"></span>
+                    <span class="lead" th:text="'[' + #{${'task.' + task.taskStatus.name()}} + ']'"></span>
                 </h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary" th:text="#{common.dateCreated} + ${task.dateCreated}"></h6>
             </div>            

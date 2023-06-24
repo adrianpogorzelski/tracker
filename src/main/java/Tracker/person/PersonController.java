@@ -66,6 +66,10 @@ public class PersonController {
 
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("people/new");
+
+            List<Authority> authorities = authorityRepository.findAll();
+            modelAndView.addObject("authorities", authorities);
+
             modelAndView.addObject("person", person);
             return modelAndView;
         }

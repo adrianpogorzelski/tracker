@@ -5,7 +5,8 @@
 </head>
 
 <section layout:fragment="custom-content" class="container">
-    <h2 class="mt-5 mb-3 pt-5 border-bottom" th:text="#{tasks.new}"></h2>
+    <h2 class="mt-5 mb-3 pt-5 display-4" th:text="#{tasks.new}"></h2>
+    <hr>
 
     <form th:action="@{/tasks/save}" th:object="${task}" method="post">
 
@@ -49,7 +50,7 @@
 
             <div id="task-type" class="form-check" th:each="type : ${taskTypes}">
                 <input class="form-check-input" type="radio" th:field="*{taskType}" th:value="${type}">
-                <label class="form-check-label" for="flexRadioDefault1" th:text="${type}"></label>
+                <label class="form-check-label" for="flexRadioDefault1" th:text="${#strings.replace(#strings.capitalize(#strings.toLowerCase(type.toString())), '_', ' ')}"></label>
             </div>
         </div>
 

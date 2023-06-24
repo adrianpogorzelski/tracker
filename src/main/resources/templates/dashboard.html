@@ -6,7 +6,8 @@
 
 <section layout:fragment="custom-content">
 
-    <h2 class="mt-5 pt-5 display-2 border-bottom">Dashboard</h2>
+    <h2 class="mt-5 pt-5 display-4">Dashboard</h2>
+    <hr>
     
     <div>
         <h3 class="mt-3" th:text="#{dashboard.projects}"></h3>
@@ -77,7 +78,7 @@
                     <span class="lead" th:text="'[ID: ' + ${task.id} + '] '"></span>
                     <span th:text="${task.name}"></span>
                     <span class="lead" th:text="' [' + ${#strings.replace(#strings.capitalize(#strings.toLowerCase(task.taskType.toString())), '_', ' ')} + '] '"></span>
-                    <span class="lead" th:text="'[' + ${#strings.replace(#strings.capitalize(#strings.toLowerCase(task.getTaskStatus().toString())), '_', ' ')} + ']'"></span>
+                    <span class="lead" th:text="'[' + #{${'task.' + task.taskStatus.name()}} + ']'"></span>
                 </h5>
                 <h6 class="card-subtitle mb-2 text-body-secondary" th:text="#{common.dateCreated} + ${task.dateCreated}"></h6>
             </div>            

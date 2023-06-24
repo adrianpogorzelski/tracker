@@ -5,7 +5,8 @@
 </head>
 
 <section layout:fragment="custom-content" class="container">
-    <h2 class="mt-5 mb-3 pt-5 border-bottom" th:text="#{projects.new}"></h2>
+    <h2 class="mt-5 mb-3 pt-5 display-4" th:text="#{projects.new}"></h2>
+    <hr>
 
     <form th:action="@{/projects/save}" th:object="${project}" method="post">
 
@@ -47,7 +48,7 @@
         </div>
 
         <!-- PROJECT MANAGER -->
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="project-manager" class="form-label" th:text="#{projects.manager}"></label>
 
             <select class="form-select" th:field="*{manager}">
