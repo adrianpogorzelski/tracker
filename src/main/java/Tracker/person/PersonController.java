@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import Tracker.authority.Authority;
-import Tracker.authority.AuthorityRepository;
+import Tracker.authority.AuthorityService;
 import Tracker.project.Project;
-import Tracker.project.ProjectRepository;
 import Tracker.project.ProjectService;
 import Tracker.task.Task;
 import Tracker.task.TaskService;
@@ -36,7 +35,7 @@ public class PersonController {
 
     final private PersonService personService;
     final private MessageSource messageSource;
-    final private AuthorityRepository authorityRepository;
+    final private AuthorityService authorityService;
     final private ProjectService projectService;
     final private TaskService taskService;
 
@@ -57,7 +56,7 @@ public class PersonController {
     ModelAndView newPerson() {
         ModelAndView modelAndView = new ModelAndView("/people/new");
 
-        List<Authority> authorities = authorityRepository.findAll();
+        List<Authority> authorities = authorityService.findAll();
         modelAndView.addObject("authorities", authorities);
 
         Person person = new Person();
@@ -74,7 +73,7 @@ public class PersonController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("people/new");
 
-            List<Authority> authorities = authorityRepository.findAll();
+            List<Authority> authorities = authorityService.findAll();
             modelAndView.addObject("authorities", authorities);
 
             modelAndView.addObject("person", person);
@@ -140,6 +139,9 @@ public class PersonController {
             Person person = personOptional.get();
             modelAndView.addObject("person", person);
 
+            List<Authority> authorities = authorityService.findAll();
+            modelAndView.addObject("authorities", authorities);
+
         } else {
             String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
             modelAndView.addObject("errorMessage", errorMessage);
@@ -159,6 +161,7 @@ public class PersonController {
             person.setLastName(updatedPerson.getLastName());
             person.setUsername(updatedPerson.getUsername());
             person.setEmail(updatedPerson.getEmail());
+            person.setAuthorities(updatedPerson.getAuthorities());
 
             if (updatedPerson.getPassword() != null) {
                 String encryptedPassword = bCryptPasswordEncoder.encode(updatedPerson.getPassword());

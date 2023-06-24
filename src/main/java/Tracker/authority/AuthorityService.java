@@ -1,5 +1,6 @@
 package Tracker.authority;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -24,4 +25,8 @@ public class AuthorityService {
         }
     System.out.println("*** Authorities created");
     }
+
+public List<Authority> findAll() {
+    return authorityRepository.findAll();
+}
 }
