@@ -71,6 +71,7 @@ public class ProjectController {
         project.setCreator(creator);
 
         project.setDateCreated(LocalDateTime.now());
+        project.setEnabled(true);
         projectService.save(project);
         return modelAndView;
     }

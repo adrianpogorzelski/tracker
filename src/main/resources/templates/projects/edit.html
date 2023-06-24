@@ -17,40 +17,41 @@
     <form th:unless="${errorMessage}" th:action="@{/projects/{id}/update(id=${project.id})}" th:object="${project}" method="post">
 
         <!-- ID - uneditable -->
-        <div class="row my-1">
-            <span class="col-2">ID</span>
-            <input class="col-10" th:value="${project.id}" disabled>
+        <div class="mb-3">
+            <label for="id" class="form-label">ID</label>
+            <input id="id" class="form-control" th:value="${project.id}" disabled>
         </div>
 
         <!-- Date created - uneditable -->
-        <div class="row my-1">
-            <span class="col-2" th:text="#{projects.dateCreated}"></span>
-            <input class="col-10" th:value="${project.dateCreated}" disabled>
+        <div class="mb-3">
+            <label for="date" class="form-label" th:text="#{common.dateCreated}"></label>
+            <input id="date" class="form-control" th:value="${project.dateCreated}" disabled>
         </div>
 
         <!-- Project name -->
-        <div class="row my-1">
-            <span class="col-2" th:text="#{projects.name}"></span>
-            <input class="col-10" th:val="${project.name}" th:field="*{name}">
+        <div class="mb-3">
+            <label for="project" class="form-label" th:text="#{common.name}"></label>
+            <input id="project" class="form-control" th:val="${project.name}" th:field="*{name}">
         </div>
 
         <!-- Project description -->
-        <div class="row my-1">
-            <span class="col-2" th:text="#{projects.description}"></span>
-            <input class="col-10" th:val="${project.description}" th:field="*{description}">
+        <div class="mb-3">
+            <label for="description" class="form-label" th:text="#{common.description}"></label>
+            <input id="description" class="form-control" th:val="${project.description}" th:field="*{description}">
         </div>
 
         <!-- Project manager -->
-        <div class="row my-1">
-            <span for="project-manager" class="col-2 form-label" th:text="#{projects.manager}"></span>
+        <div class="mb-3">
+            <label for="project-manager" class="form-label" th:text="#{projects.manager}"></label>
 
-            <select class="col-10 form-select" th:field="*{manager.id}">
-                <option th:each="person : ${people}"
-                        th:if="${person.enabled}"
-                        th:value="${person.id}"
-                        th:text="${person.firstName} + ' ' + ${person.lastName}">
-                </option>
-            </select>            
+                <select id="project-manager" class="form-select" th:field="*{manager.id}">
+                    <option th:each="person : ${people}"
+                            th:if="${person.enabled}"
+                            th:value="${person.id}"
+                            th:text="${person.firstName} + ' ' + ${person.lastName}">
+                    </option>
+                </select>            
+                
         </div>
 
         <div class="d-flex mt-3 justify-content-between">
@@ -78,13 +79,15 @@
         </div>
     </form>
 
+    <div class="mt-3">
+
     <!-- disable -->
     <div class="btn btn-outline-danger justify-self-start" data-bs-toggle="modal" data-bs-target="#confirmdisable">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-        </svg>
-        <span th:text="#{common.disable}"></span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        <span th:text="#{disable.title}"></span>
     </div>
 
     <!-- Confirm disable modal -->
@@ -93,12 +96,12 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="confirmdisableLabel" th:text="#{common.confirmdisable}"></h1>
+                    <h1 class="modal-title fs-5" id="confirmdisableLabel" th:text="#{disable.title}"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
-                    <span th:text="#{disable.text}"></span>
+                    <span th:text="#{disable.confirm}"></span>
                 </div>
 
                 <div class="modal-footer">
@@ -116,18 +119,71 @@
                     <!-- Confirm disable -->
                     <a th:href="@{/projects/{id}/disable(id=${project.id})}">
                         <button class="btn btn-outline-danger justify-self-start" data-bs-toggle="modal" data-bs-target="#confirmdisable">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
-                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                            </svg>
-                            <span th:text="#{common.disable}"></span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                              </svg>
+                        <span th:text="#{disable.title}"></span>
                         </button>                       
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    
+
+     <!-- delete -->
+     <div th:if="${#authentication.getPrincipal().getUsername() == 'admin'}"
+        class="btn btn-outline-danger justify-self-start" 
+        data-bs-toggle="modal" 
+        data-bs-target="#confirmdelete">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+        </svg>
+        <span th:text="#{common.delete}"></span>
+    </div>
+
+    <!-- Confirm delete modal -->
+    <div class="modal fade" id="confirmdelete" tabindex="-1" aria-labelledby="confirmdeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmdeleteLabel" th:text="#{delete.title}"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <span th:text="#{delete.confirm}"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="btn btn-secondary" data-bs-dismiss="modal">
+                        <div class="d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left me-2 mt-1" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                            <a class="nav-link" 
+                                th:text="#{common.cancel}">
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Confirm delete -->
+                    <a th:href="@{/projects/{id}/delete(id=${project.id})}">
+                        <button class="btn btn-outline-danger justify-self-start" data-bs-toggle="modal" data-bs-target="#confirmdelete">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                            </svg>
+                            <span th:text="#{common.delete}"></span>
+                        </button>                       
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </section>    
 

@@ -2,7 +2,6 @@ package Tracker.person;
 
 import lombok.Data;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
@@ -65,11 +64,11 @@ public class Person {
                 inverseJoinColumns = @JoinColumn(name = "authority_id"))
     private Set<Authority> authorities;
 
-    @OneToMany(mappedBy = "manager")
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> managedProjects;
 
-    @OneToMany(mappedBy = "assignee")
-    private List<Task> tasks;
+    @OneToMany(mappedBy = "assignee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;;
 
     @Column
     private Boolean enabled;    

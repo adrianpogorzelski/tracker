@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.resource.transaction.spi.DdlTransactionIsolator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
@@ -69,7 +68,6 @@ public class TaskController {
 
         List<Person> people = personService.findAll();
         modelAndView.addObject("people", people);
-
 
         modelAndView.addObject("taskTypes", TaskType.values());
 
@@ -160,6 +158,7 @@ public class TaskController {
             task.setName(updatedTask.getName());
             task.setDescription(updatedTask.getDescription());
             task.setAssignee(updatedTask.getAssignee());
+            task.setTaskType(updatedTask.getTaskType());
 
             Project selectedProject = updatedTask.getProject();
             Optional<Project> projectOptional = projectService.findById(selectedProject.getId());
