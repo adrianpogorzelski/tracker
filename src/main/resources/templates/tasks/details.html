@@ -15,7 +15,6 @@
     <p>
         <span th:text="#{tasks.assignee} + ': '"></span>
         <span th:class="${!task.assignee.enabled} ? 'text-muted text-decoration-line-through' : ''">
-            [[${task.assignee.firstName}]] [[${task.assignee.lastName}]]
         </span>
     </p>
     

@@ -17,6 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Tracker.authority.Authority;
 import Tracker.authority.AuthorityRepository;
+import Tracker.project.Project;
+import Tracker.project.ProjectRepository;
+import Tracker.project.ProjectService;
+import Tracker.task.Task;
+import Tracker.task.TaskService;
 
 import java.text.Normalizer;
 import java.util.regex.Pattern;
@@ -32,6 +37,8 @@ public class PersonController {
     final private PersonService personService;
     final private MessageSource messageSource;
     final private AuthorityRepository authorityRepository;
+    final private ProjectService projectService;
+    final private TaskService taskService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -108,6 +115,13 @@ public class PersonController {
         if (personOptional.isPresent()) {
             Person person = personOptional.get();
             modelAndView.addObject("person", person);
+
+            List<Project> projects = projectService.findAll();
+            modelAndView.addObject("projects", projects);
+
+            Iterable<Task> tasks = taskService.findAll();
+            modelAndView.addObject("tasks", tasks);
+
         } else {
             String errorMessage = messageSource.getMessage("error.invalidProjectId", null, LocaleContextHolder.getLocale());
             modelAndView.addObject("errorMessage", errorMessage);
