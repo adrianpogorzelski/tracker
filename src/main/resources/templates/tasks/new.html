@@ -18,7 +18,9 @@
                     class="form-control" 
                     id="task-name" 
                     th:placeholder="#{projects.namePlaceholder}"
-                    th:field="*{name}">
+                    th:field="*{name}"
+                    required
+                    minlength="3">
 
             <!-- Errors -->
             <div class="alert alert-warning mt-1"
@@ -35,7 +37,9 @@
                 class="form-control" 
                 id="task-description"
                 th:placeholder="#{projects.descriptionPlaceholder}"
-                th:field="*{description}">
+                th:field="*{description}"
+                required
+                minlength="3">
 
             <!-- Errors -->
             <div class="alert alert-warning mt-1"
