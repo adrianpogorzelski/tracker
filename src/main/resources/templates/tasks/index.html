@@ -65,7 +65,7 @@
     </form>
 
     <!-- TASKS-->
-    <div class="card w-100 my-2" th:each="task : ${tasks}">
+    <div class="card w-100 my-2" th:each="task : ${tasks}" th:if="${task.enabled == true}">
         <div class="card-body row">
             <div class="col">
                 <h5 class="card-title">
