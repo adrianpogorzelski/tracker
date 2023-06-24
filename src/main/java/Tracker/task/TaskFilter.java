@@ -26,14 +26,14 @@ public class TaskFilter {
         );    
     }    
     
-    private Specification<Task> equalTo(String property, Object value) {        
+/*     private Specification<Task> equalTo(String property, Object value) {        
         if (value == null) {            
             return Specification.where(null);        
         }        
         
         return (root, query, builder) -> builder.equal(root.get(property), value);   
     }
-    
+ */    
      private Specification<Task> equalTo(String property, TaskStatus value) {
         if (value == null) {
             return Specification.where(null);
@@ -50,11 +50,11 @@ public class TaskFilter {
         return (root, query, builder) -> builder.equal(root.get(property).get(relProperty), value);    
     }    
     
-    private Specification<Task> ilike(String property, String value) {        
+    /* private Specification<Task> ilike(String property, String value) {        
         if (value == null) {            
             return Specification.where(null);        
         }       
          
         return (root, query, builder) -> builder.like(builder.lower(root.get(property)), "%" + value.toLowerCase() + "%");    
-    }
+    } */
 }
